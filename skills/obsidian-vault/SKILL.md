@@ -88,6 +88,64 @@ Obsidian uses `[[Note Name]]` syntax for internal links:
 - Avoid special characters: `# | ^ : %% [[ ]]`
 - Always use `.md` extension
 
+## Searching with Arrowhead CLI
+
+**IMPORTANT**: Use the **arrowhead** CLI for all vault searches. This is the preferred search method.
+
+Arrowhead provides hybrid search combining full-text (FTS) and semantic search across the vault. Documentation: https://github.com/totocaster/arrowhead
+
+### Search Commands
+
+```bash
+# Hybrid search (combines FTS + semantic) - RECOMMENDED
+arrowhead search hybrid "query"
+
+# Full-text search only
+arrowhead search fts "query"
+
+# Semantic/vector search only
+arrowhead search semantic "query"
+```
+
+**Search options**:
+- `--limit N` - Limit number of results
+- `--format [paths|ids|json]` - Output format
+
+### Graph Commands
+
+```bash
+# Find disconnected notes
+arrowhead graph orphans
+
+# Find backlinks to a note
+arrowhead graph backlinks "note-title"
+
+# View note relationships/context
+arrowhead graph context "note-title"
+```
+
+### Note Commands
+
+```bash
+# List all notes
+arrowhead notes list [--json]
+
+# Read note content
+arrowhead notes read [note-title]
+
+# Create, update, or delete notes
+arrowhead notes create
+arrowhead notes delete
+```
+
+### When to Use Arrowhead
+
+- **Always** prefer arrowhead for searching vault content
+- Use for finding notes by topic, keyword, or concept
+- Use for semantic searches ("notes about X")
+- Use for exploring related content
+- Use graph commands to analyze note relationships
+
 ## Core Operations
 
 ### Creating Notes
