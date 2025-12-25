@@ -22,7 +22,7 @@ Use this path for all vault operations unless the user explicitly specifies a di
 ├── @Inbox/                 # Inbox for new/unsorted notes
 ├── assets/                 # Images and attachments
 ├── Clippings/             # Web clippings and saved content
-├── Journal/               # Daily notes and journal entries
+├── Journal/               # Journal entries
 ├── Projects/              # Project-specific notes
 │   └── Archive/           # Archived projects
 │       └── Stripe/        # Archived: Stripe project
@@ -45,7 +45,7 @@ Use this path for all vault operations unless the user explicitly specifies a di
 - **Readwise**: Auto-synced highlights (don't manually edit)
 - **Writing**: Long-form writing and published content
 
-**Note**: Log entries are managed by the dedicated `log` skill.
+**Note**: Log entries and the Log.md file are managed by the dedicated `log` skill.
 
 ## Obsidian-Specific Conventions
 
@@ -258,6 +258,7 @@ Write tool:
 - No `title:` in frontmatter
 - No `# Title` header at top
 - Start content immediately after frontmatter
+- No blank lines after headers (H2s) - content starts immediately on next line
 
 ### Editing Notes
 
@@ -317,6 +318,95 @@ find "/Users/chase/Notes" -name "*.md" -type f
 - Create placeholder notes with wikilinks, fill in later
 - Use aliases for frequently referenced notes: `[[Long Name|Short]]`
 - Link to specific sections: `[[Note#Section Name]]`
+
+## Obsidian Bases and Map Views
+
+Bases are Obsidian's database-like views for organizing and visualizing notes. They use `.base` files to define filters, properties, and views.
+
+### Creating a Base with Map View
+
+**Example: Japan Places Map**
+
+1. **Create a folder** for location notes:
+```bash
+mkdir -p "/Users/chase/Notes/Slipbox/Japan"
+```
+
+2. **Create the `.base` file** (e.g., `Japan.base`):
+```yaml
+filters:
+  and:
+    - file.folder == "Slipbox/Japan"
+properties:
+  file.name:
+    displayName: Place
+  coordinates:
+    displayName: Coordinates
+views:
+  - type: map
+    name: Map
+    markerCoordinatesField: coordinates
+    center: "[35.57684, 140.3672]"
+    defaultZoom: 4.8
+    coordinates: note.coordinates
+    markerIcon: note.icon
+    markerColor: note.color
+    mapHeight: 320
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - coordinates
+      - color
+      - icon
+```
+
+**Key configuration:**
+- `filters`: Use `file.folder == "Folder/Path"` to include notes from a specific folder
+- `markerCoordinatesField`: Must match the property name in location notes (use `coordinates`)
+- `center`: Center point of map as `"[lat, lon]"`
+- `defaultZoom`: Initial zoom level
+- `markerIcon` and `markerColor`: Reference note properties for customization
+
+3. **Create location notes** with required frontmatter:
+```yaml
+---
+coordinates: 32.7042, 131.3117
+color: red
+icon: landmark
+tags:
+---
+
+Place description here.
+```
+
+**Coordinate format:**
+- Use plain format: `coordinates: lat, lon`
+- NOT array format: `[lat, lon]` causes parsing issues
+- Example: `coordinates: 35.6762, 139.6503`
+
+4. **Embed the map** in a note:
+```markdown
+![[Japan.base#Map]]
+```
+
+Format: `![[BaseName.base#ViewName]]`
+
+### Adding Places to Maps
+
+When adding new locations to an existing map:
+
+1. Create a new note in the mapped folder
+2. Add frontmatter with:
+   - `coordinates: lat, lon` (required)
+   - `color: red|blue|green|...` (optional)
+   - `icon: landmark|star|...` (optional)
+3. The map automatically updates
+
+### Map Icons and Colors
+
+Common icon values: `landmark`, `star`, `flag`, `pin`, `circle`
+Common color values: `red`, `blue`, `green`, `yellow`, `orange`, `purple`
 
 ## Important Notes
 
