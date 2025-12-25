@@ -96,7 +96,7 @@ cp /path/to/image.jpg /Users/chase/Notes/assets/descriptive-name.jpg
 - Avoid special characters: `# | ^ : %% [[ ]]`
 - Filename IS the title (don't repeat in file)
 
-### Obsidian URI
+### Obsidian URI - Opening Notes
 
 **ALWAYS link note references** using obsidian:// URIs:
 
@@ -211,3 +211,4 @@ When adding new locations to an existing map:
 - Use absolute paths
 - UTF-8 encoding
 - Frontmatter must start at first line
+- **ALWAYS link note references in your output** using obsidian:// URIs
