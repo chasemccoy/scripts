@@ -27,6 +27,8 @@ limit, offset
 
 Fields for ordering: `recordCreatedAt`, `recordUpdatedAt`, `title`, `contentCreatedAt`, `contentUpdatedAt`, `id`, `slug`, `type`
 
+**When presenting search results**: Always link to records using `https://enchiridion.chsmc.tools/{slug}` where `{slug}` is the record's slug field.
+
 ### create
 Create a new record. Required: `title`, `slug`. Optional: `content`, `summary`, `url`, `type`.
 
@@ -81,10 +83,22 @@ JOIN links l ON r.id = l.source_id
 WHERE l.target_id = [creator_id] AND l.predicate_id = 1
 ```
 
-## Database Schema
+## Schema Reference
 
-Main tables: `records`, `links`, `predicates`, `media`
+### Search Tool Fields (camelCase)
+The `search` tool uses camelCase field names for `orderBy`:
+- `recordCreatedAt`, `recordUpdatedAt`, `contentCreatedAt`, `contentUpdatedAt`
+- `id`, `slug`, `type`, `title`
 
-Records have: id, slug, type, title, url, is_curated, summary, content, notes, source, created_at, updated_at
+### Database Schema (snake_case)
+The `query` tool uses raw SQL against the actual database with snake_case columns:
 
-Links connect records via predicates with: source_id, target_id, predicate_id
+**records**: `id`, `slug`, `type`, `title`, `url`, `is_curated`, `summary`, `content`, `notes`, `source`, `created_at`, `updated_at`, `content_created_at`, `content_updated_at`
+
+**links**: `id`, `source_id`, `target_id`, `predicate_id`, `notes`, `created_at`, `updated_at`
+
+**predicates**: `id`, `slug`, `name`, `type`, `role`, `inverse_slug`, `canonical`, `created_at`, `updated_at`
+
+**media**: `id`, `record_id`, `url`, `alt_text`, `type`, `content_type_string`, `file_size`, `width`, `height`, `created_at`, `updated_at`
+
+⚠️ **Important**: Use `created_at` (snake_case) in SQL queries, but `recordCreatedAt` (camelCase) in the search tool's `orderBy` parameter.

@@ -18,19 +18,20 @@ The Log is a running markdown file for daily entries and quick captures.
 ### Structure
 
 ```markdown
+---
 ## Wednesday, November 5
-
 - New entry added today
 - Another item from today
 
 ## Tuesday, November 4
-
 - Entry from yesterday
 - Previous day's notes
 ```
 
 **Key Details**:
+- **Horizontal rule**: File starts with `--- ` (note trailing space) for Obsidian formatting
 - **Date format**: `## Day, Month Date` (e.g., `## Wednesday, November 5`)
+- **No blank lines**: Date headings immediately followed by entries (no empty line between)
 - **Order**: Most recent date at the top
 - **Entries**: List items (`-`) under each date heading
 - **Year**: Current log represents current year only
@@ -49,7 +50,7 @@ The Log is a running markdown file for daily entries and quick captures.
 Match the date heading itself to avoid whitespace issues:
 Edit tool:
 - old_string: "## Wednesday, November 5"
-- new_string: "## Wednesday, November 5\n- New entry"
+- new_string: "## Wednesday, November 5\n- New entry"  # No blank line after heading
 ```
 
 **Alternative** (match first entry, riskier due to whitespace):
@@ -63,9 +64,13 @@ Edit tool:
 **Creating new date heading**:
 ```
 Edit tool:
-- old_string: "## Tuesday, November 4"  # Copy exact from Read
-- new_string: "## Wednesday, November 5\n\n- First entry\n\n## Tuesday, November 4"
+- old_string: "--- \n## Tuesday, November 4"  # Include horizontal rule with trailing space
+- new_string: "--- \n## Wednesday, November 5\n- First entry\n\n## Tuesday, November 4"  # No blank line after new heading
 ```
+
+**CRITICAL**:
+- Always preserve `--- ` (with trailing space) at top of file for Obsidian formatting
+- No blank line between date heading and first entry
 
 **Tip**: Match smallest unique string (e.g., just first entry line) to avoid multi-line whitespace issues
 

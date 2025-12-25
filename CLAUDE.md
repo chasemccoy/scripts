@@ -24,9 +24,10 @@
 - **Apple Notes Skill**: `~/Repositories/scripts/skills/apple-notes`
 - **Blogging Skill**: `~/Repositories/scripts/skills/blogging`
 - **Lab Skill**: `~/Repositories/scripts/skills/lab`
-- **Enchiridion Skill**: `~/Repositories/scripts/skills/enchiridion` - Use for interacting with Enchiridion, a knowledge repository for long-term storage of links, references, sources, and research. Records can be artifacts, entities, or concepts, linked via predicates.
+- **Enchiridion Skill**: `~/Repositories/scripts/skills/enchiridion` - ALWAYS use this skill when user asks to search, create, update, link, or query records in Enchiridion. DO NOT use MCP tools directly. Enchiridion is a knowledge repository for long-term storage of links, references, sources, and research. Records can be artifacts, entities, or concepts, linked via predicates.
 - **Obsidian Vault Skill**: `~/Repositories/scripts/skills/obsidian-vault` - Create, edit, organize notes in `~/Notes`. Supports frontmatter, wikilinks, and arrowhead CLI for search. Use for permanent notes, projects, clippings, and writing.
 - **Log Skill**: `~/Repositories/scripts/skills/log` - Manage `~/Notes/Log.md` only. Use for daily log entries (brief list items under date headings). Always use this skill for log operations, not the obsidian-vault skill.
+- **Twitter Skill**: `~/Repositories/scripts/skills/twitter` - Fetch tweet content from Twitter/X URLs. Use when user asks to access, fetch, or get information from tweets. Works without API keys via syndication endpoint.
 
 ## Usage notes
 

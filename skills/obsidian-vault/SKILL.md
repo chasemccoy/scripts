@@ -55,7 +55,6 @@ Frontmatter is optional metadata at the top of notes, enclosed in `---`:
 
 ```markdown
 ---
-title: Note Title
 date: YYYY-MM-DD
 tags: [tag1, tag2]
 aliases: [Alternative Name]
@@ -66,8 +65,32 @@ Note content starts here.
 
 **Important**:
 - Must be at the very top of the file
-- Common fields: `title`, `date`, `tags`, `aliases`, `status`, `author`
+- Common fields: `date`, `tags`, `aliases`, `status`, `author`
 - Always preserve existing frontmatter when editing unless asked to modify it
+- **Do NOT include `title` property** - titles are derived from the filename
+- **Do NOT add a markdown header repeating the filename** - start directly with content
+
+### Tags
+
+This vault uses **minimal tagging** with a preference for wikilinks over tags. Tags are used sparingly:
+
+**Current tag usage patterns:**
+- `draft` - Used in Writing folder for draft posts/articles
+- `#articles`, `#books`, `#tweets` - Auto-added by Readwise in the Readwise folder (don't manually edit)
+
+**Inline tag syntax:**
+- YAML frontmatter: `tags: [tag1, tag2]` 
+
+**Tag philosophy:**
+- Prefer **wikilinks** over tags for connections between notes
+- Use tags only when they add clear organizational value
+- Keep tag taxonomy flat and minimal
+- Don't create redundant tags when wikilinks work better
+- Example: Instead of `tags: [writing]`, use wikilink `[[Writing]]`
+
+**When to use tags vs wikilinks:**
+- Tags: Status (`draft`), broad categorization, auto-generated (Readwise)
+- Wikilinks: Concepts, people, topics, relationships between ideas
 
 ### Wikilinks
 
@@ -80,13 +103,83 @@ Obsidian uses `[[Note Name]]` syntax for internal links:
 [[Folder/Note Name]]            # Link to note in subfolder
 ![[Note Name]]                  # Embed the entire note
 ![[Image.png]]                  # Embed an image
+![[Image.png|300]]              # Embed with width (in pixels)
 ```
+
+### Images and Attachments
+
+**Storage location:** All images are stored in `/Users/chase/Notes/assets/`
+
+**Image naming patterns:**
+- Auto-generated screenshots: `Pasted image YYYYMMDDHHMMSS.png` (from Obsidian)
+- Screenshots from CleanShot: `CleanShot YYYY-MM-DD at HH.MM.SS@2x.png`
+- iPhone photos: `IMG_XXXX.jpeg`
+- Named images: Use descriptive names like `seuss.jpg`
+- Book covers: ISBN-based like `9781234567890.jpg`
+
+**Embedding images in notes:**
+
+Prefer wikilink syntax over markdown:
+```markdown
+![[assets/image.png]]           # Embed from assets folder
+![[image.png]]                  # Also works (Obsidian finds it in assets)
+![[assets/image.png|400]]       # Specify width in pixels
+```
+
+Markdown syntax also works:
+```markdown
+![](assets/image.png)           # Standard markdown
+![Alt text](assets/image.png)   # With alt text
+```
+
+**Adding images to vault:**
+
+Use Bash tool to copy images to the assets folder:
+```bash
+# Copy image to assets
+cp /path/to/image.jpg /Users/chase/Notes/assets/descriptive-name.jpg
+```
+
+Then reference in notes:
+```markdown
+![[descriptive-name.jpg]]
+```
+
+**Best practices:**
+- Store all images in `assets/` folder (flat structure, no subfolders)
+- Use descriptive filenames
+- Prefer wikilink syntax for easier refactoring
+- Specify width when needed: `![[image.png|300]]`
 
 ### File Naming
 
 - Use descriptive names with spaces: `Meeting Notes.md`
 - Avoid special characters: `# | ^ : %% [[ ]]`
 - Always use `.md` extension
+- **The filename IS the note title** - no need to repeat it in frontmatter or as a header
+
+### Obsidian URI - Opening Notes
+
+Use the `obsidian://` URI scheme to open notes directly in Obsidian:
+
+```
+obsidian://open?vault=Notes&file=Note%20Name
+```
+
+**Format:**
+- `vault=Notes` - The vault name (use "Notes" for this vault)
+- `file=Note%20Name` - URL-encoded note path relative to vault root
+- For notes in subfolders: `file=Slipbox/Note%20Name`
+
+**When responding to users:**
+- **ALWAYS link note references** using obsidian:// URIs
+- Format: `[Note Name](obsidian://open?vault=Notes&file=Note%20Name)`
+- URL-encode spaces as `%20` and special characters appropriately
+- Examples:
+  - `[Japan Travel](obsidian://open?vault=Notes&file=Slipbox/Japan%20Travel)`
+  - `[Writing](obsidian://open?vault=Notes&file=Slipbox/Writing)`
+
+**Important:** Every time you mention a note that exists in the vault, link it with an obsidian:// URI so the user can click to open it.
 
 ## Searching with Arrowhead CLI
 
@@ -155,10 +248,16 @@ Use the **Write** tool with the full path:
 ```
 Write tool:
 - file_path: /Users/chase/Notes/Note Name.md
-- content: "---\ntitle: Note Name\ndate: YYYY-MM-DD\ntags: []\n---\n\n# Note Name\n\nContent here.\n\nRelated: [[Other Note]]"
+- content: "---\ndate: YYYY-MM-DD\ntags: []\n---\n\nContent here.\n\nRelated: [[Other Note]]"
 ```
 
 **Pattern**: vault_path + optional_subfolder + filename.md
+
+**Note structure:**
+- Filename serves as the title
+- No `title:` in frontmatter
+- No `# Title` header at top
+- Start content immediately after frontmatter
 
 ### Editing Notes
 
@@ -204,9 +303,10 @@ find "/Users/chase/Notes" -name "*.md" -type f
 ## Best Practices
 
 **Frontmatter**:
-- Include at minimum `title` and `date`
+- Include `date` when relevant
 - Use ISO date format (YYYY-MM-DD)
 - Keep tags consistent across vault
+- Never include `title` - it's derived from filename
 
 **Organization**:
 - Use folders for broad categories (Projects, Journal, References)
