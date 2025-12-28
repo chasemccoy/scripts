@@ -2,7 +2,7 @@
 name: log
 description: Manage personal log entries. Use when user asks to create, edit, delete, or organize log entries. You MUST use this skill when asked about the log or log entries.
 version: 1.0.0
-allowed-tools: Read, Edit, Grep
+allowed-tools: Read, Edit, Grep, Bash
 ---
 
 # Personal Log Management
@@ -64,12 +64,13 @@ Edit tool:
 **Creating new date heading**:
 ```
 Edit tool:
-- old_string: "--- \n## Tuesday, November 4"  # Include horizontal rule with trailing space
-- new_string: "--- \n## Wednesday, November 5\n- First entry\n\n## Tuesday, November 4"  # No blank line after new heading
+- old_string: "## Tuesday, November 4"  # Match ONLY the previous date heading - NEVER include the --- line
+- new_string: "## Wednesday, November 5\n- First entry\n\n## Tuesday, November 4"  # No blank line after new heading
 ```
 
-**CRITICAL**:
-- Always preserve `--- ` (with trailing space) at top of file for Obsidian formatting
+**CRITICAL - NEVER TOUCH THE `---` LINE**:
+- NEVER include `---` in old_string or new_string when editing
+- Only match date headings or entries, never the horizontal rule
 - No blank line between date heading and first entry
 
 **Tip**: Match smallest unique string (e.g., just first entry line) to avoid multi-line whitespace issues
