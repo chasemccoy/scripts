@@ -137,6 +137,16 @@ Content starts here.
 
 Pattern: vault_path + optional_subfolder + filename.md
 
+**CRITICAL: Auto-linking existing notes**
+- Before creating any note, search for potential wikilink targets using arrowhead
+- When writing content that mentions other note names, ALWAYS wikilink them using `[[Note Name]]` syntax
+- Search for partial matches: if content mentions "Toyama", search for notes containing "Toyama"
+- Example workflow:
+  1. Draft note content
+  2. Run `arrowhead search fts "keyword"` for each potential note reference
+  3. Add wikilinks for any matches found
+  4. Write the note with all wikilinks included
+
 ### Editing Notes
 
 1. **Read** to view current content
@@ -212,3 +222,4 @@ When adding new locations to an existing map:
 - UTF-8 encoding
 - Frontmatter must start at first line
 - **ALWAYS link note references in your output** using obsidian:// URIs
+- Always add wikilinks in notes to cross-link to other relevant notes
