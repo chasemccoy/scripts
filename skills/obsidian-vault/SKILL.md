@@ -6,12 +6,13 @@ version: 1.0.0
 
 # Obsidian Vault Management
 
+## Vault setup
+
 **VAULT PATH**: `/Users/chase/Notes`
 
 **LOG HANDLING**: Log.md and log entries are managed by the dedicated `log` skill, not this skill.
 
-### Folder Structure
-
+**Folder structure:**
 - **@Inbox**: Quick captures and unsorted notes
 - **Journal**: Daily notes and time-based entries
 - **Projects**: Active projects (archive completed to `Projects/Archive/`)
@@ -20,15 +21,49 @@ version: 1.0.0
 - **Writing**: Long-form writing and drafts
 - **assets**: All images and attachments
 
-## Obsidian-Specific Conventions
+## Writing conventions
 
-### YAML Frontmatter
+### Voice and perspective
+
+**CRITICAL: All notes must be written from Chase's first-person perspective.**
+
+When creating or editing notes:
+- Write as if Chase is writing for himself
+- Use first person ("I", "my", "me")
+- Adopt Chase's voice and thinking style
+- Notes are personal knowledge, not documentation written about Chase
+- Example: "I think this approach..." NOT "Chase thinks this approach..."
+- Example: "This reminds me of..." NOT "This might remind the user of..."
+
+These are personal notes in Chase's vault, not third-party documentation.
+
+### File naming
+
+- **Use sentence case**: Capitalize only the first word (e.g., `Meeting notes.md`, `Claude code productivity skill.md`)
+- Descriptive names with spaces
+- Avoid special characters: `# | ^ : %% [[ ]]`
+- Filename IS the title (don't repeat in file)
+
+### Formatting
+
+- **No blank lines after headings**: Content should start immediately on the next line after a heading
+  ```markdown
+  ## Heading
+  Content starts here immediately.
+
+  - Or lists start immediately
+  - Like this
+  ```
+
+## Markdown syntax
+
+### Frontmatter
 
 Optional metadata at the top of notes, enclosed in `---`:
 
 ```markdown
 ---
-date: YYYY-MM-DD
+created: YYYY-MM-DD HH:mm
 tags: [tag1, tag2]
 aliases: [Alternative Name]
 ---
@@ -36,20 +71,11 @@ aliases: [Alternative Name]
 Content starts here.
 ```
 
-**Rules**:
+**Rules:**
 - Must be at the very top of the file
-- Common fields: `date`, `tags`, `aliases`, `status`
+- Common fields: `created`, `tags`, `aliases`
 - Preserve existing frontmatter unless asked to modify
 - **No `title` property or `# Title` header** - filename IS the title
-
-### Tags
-
-**Prefer wikilinks over tags.** Use tags sparingly:
-
-- Tags: Status (`draft`), broad categorization, auto-generated (Readwise)
-- Wikilinks: Concepts, people, topics, relationships between ideas
-- Syntax: `tags: [tag1, tag2]` in frontmatter
-- Keep taxonomy flat and minimal
 
 ### Wikilinks
 
@@ -65,7 +91,16 @@ Syntax for internal links:
 ![[Image.png|300]]              # Embed with width (in pixels)
 ```
 
-### Embedding Tweets
+### Tags
+
+**Prefer wikilinks over tags.** Use tags sparingly:
+
+- Tags: Status (`draft`), broad categorization, auto-generated (Readwise)
+- Wikilinks: Concepts, people, topics, relationships between ideas
+- Syntax: `tags: [tag1, tag2]` in frontmatter
+- Keep taxonomy flat and minimal
+
+### Embedding tweets
 
 **ALWAYS embed tweets** using markdown image syntax:
 
@@ -75,7 +110,7 @@ Syntax for internal links:
 
 This works without any text - just the URL in image syntax. The Obsidian tweet embed plugin will render it properly.
 
-### Images and Attachments
+### Images and attachments
 
 **Storage**: `/Users/chase/Notes/assets/` (flat structure)
 
@@ -90,24 +125,9 @@ This works without any text - just the URL in image syntax. The Obsidian tweet e
 cp /path/to/image.jpg /Users/chase/Notes/assets/descriptive-name.jpg
 ```
 
-### File Naming
+## Core operations
 
-- Descriptive names with spaces: `Meeting Notes.md`
-- Avoid special characters: `# | ^ : %% [[ ]]`
-- Filename IS the title (don't repeat in file)
-
-### Obsidian URI - Opening Notes
-
-**ALWAYS link note references** using obsidian:// URIs:
-
-```
-[Note Name](obsidian://open?vault=Notes&file=Note%20Name)
-[Folder Note](obsidian://open?vault=Notes&file=Slipbox/Note%20Name)
-```
-
-URL-encode spaces as `%20`.
-
-## Searching with Arrowhead CLI
+### Searching
 
 Use **arrowhead** for vault searches (hybrid FTS + semantic search):
 
@@ -121,15 +141,13 @@ arrowhead notes list                     # List all notes
 
 Options: `--limit N`, `--format [paths|ids|json]`
 
-## Core Operations
-
-### Creating Notes
+### Creating notes
 
 Use **Write** tool: `/Users/chase/Notes/Note Name.md`
 
 ```markdown
 ---
-date: YYYY-MM-DD
+created: YYYY-MM-DD HH:mm
 ---
 
 Content starts here.
@@ -147,13 +165,13 @@ Pattern: vault_path + optional_subfolder + filename.md
   3. Add wikilinks for any matches found
   4. Write the note with all wikilinks included
 
-### Editing Notes
+### Editing notes
 
 1. **Read** to view current content
 2. **Edit** with `old_string`/`new_string`
 3. Preserve frontmatter unless asked to modify
 
-### Deleting Notes
+### Deleting notes
 
 ```bash
 rm "/Users/chase/Notes/Note.md"
@@ -161,14 +179,27 @@ rm "/Users/chase/Notes/Note.md"
 
 Confirm with user first.
 
-### Folder Operations
+### Folder operations
 
 ```bash
 mkdir -p "/Users/chase/Notes/Projects/Project Name"
 ls "/Users/chase/Notes"
 ```
 
-## Obsidian Bases (Map Views)
+## Advanced features
+
+### Obsidian URIs
+
+**ALWAYS link note references in your output** using obsidian:// URIs:
+
+```
+[Note Name](obsidian://open?vault=Notes&file=Note%20Name)
+[Folder Note](obsidian://open?vault=Notes&file=Slipbox/Note%20Name)
+```
+
+URL-encode spaces as `%20`.
+
+### Obsidian Bases (map views)
 
 Create `.base` files for map visualizations. Example structure:
 
@@ -200,14 +231,14 @@ views:
       - icon
 ```
 
-**Location note frontmatter**:
+**Location note frontmatter:**
 ```yaml
 coordinates: 32.7042, 131.3117  # Plain format (not array)
 ```
 
 **Embed**: `![[BaseName.base#Map]]`
 
-### Adding Places to Maps
+**Adding places to maps:**
 
 When adding new locations to an existing map:
 
@@ -216,23 +247,9 @@ When adding new locations to an existing map:
    - `coordinates: lat, lon` (required)
 3. The map automatically updates
 
-## Writing Voice and Perspective
+## Important reminders
 
-**CRITICAL: All notes must be written from Chase's first-person perspective.**
-
-When creating or editing notes:
-- Write as if Chase is writing for himself
-- Use first person ("I", "my", "me")
-- Adopt Chase's voice and thinking style
-- Notes are personal knowledge, not documentation written about Chase
-- Example: "I think this approach..." NOT "Chase thinks this approach..."
-- Example: "This reminds me of..." NOT "This might remind the user of..."
-
-These are personal notes in Chase's vault, not third-party documentation.
-
-## Important
-
-- Use absolute paths
+- Use absolute paths for all file operations
 - UTF-8 encoding
 - Frontmatter must start at first line
 - **ALWAYS link note references in your output** using obsidian:// URIs
