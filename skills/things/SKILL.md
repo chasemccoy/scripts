@@ -1,6 +1,6 @@
 ---
 name: things
-description: Manage tasks in Things 3. Use when user asks to add, find, search, or list tasks, projects, areas, or tags.
+description: Manage tasks in Things 3. Use when user asks to add, find, search, delete, or list tasks, projects, areas, or tags.
 allowed-tools: Bash
 ---
 
@@ -117,6 +117,36 @@ Find tasks by name:
 node /Users/chase/Repositories/scripts/skills/things/things-cli.js search "query"
 ```
 
+### Delete tasks
+
+Delete a task by exact name:
+
+```bash
+node /Users/chase/Repositories/scripts/skills/things/things-cli.js delete "Task name"
+```
+
+**Note:** Deletes all tasks with the exact matching name. Use with caution.
+
+### Delete projects
+
+Delete a project by exact name:
+
+```bash
+node /Users/chase/Repositories/scripts/skills/things/things-cli.js delete-project "Project name"
+```
+
+**Note:** Deletes all projects with the exact matching name. Use with caution.
+
+### Move tasks
+
+Move a task to a different list:
+
+```bash
+node /Users/chase/Repositories/scripts/skills/things/things-cli.js move "Task name" "Today"
+```
+
+**List options:** Today, Upcoming, Anytime, Someday, Inbox
+
 ## Add task options
 
 - `--notes "text"` - Add notes/description to the task
@@ -134,6 +164,15 @@ node /Users/chase/Repositories/scripts/skills/things/things-cli.js search "query
 - When adding tasks, `--project` and `--area` are mutually exclusive
 - Use `list-areas`, `list-projects`, and `list-tags` first to understand organization
 - The `--list` option accepts: Today, Upcoming, Anytime, Someday, Inbox
+
+### Grocery and shopping list preferences
+
+When the user adds grocery items or shopping lists:
+- **Always add items as individual tasks** (not combined into a single task)
+- Add each item to the **🛒 Shopping project**
+- **Check existing tasks first** to avoid duplicates - use `show-project "🛒 Shopping"` before adding items
+- Only add items that aren't already on the list
+- Example: For "milk, bread, eggs" → create 3 separate tasks in 🛒 Shopping project (unless already present)
 
 ## Common workflows
 
@@ -156,6 +195,12 @@ Before adding a task, check available projects and areas:
 1. Start with `list-areas` to see top-level organization
 2. For each area of interest, use `list-projects "Area Name"` to see projects
 3. Use `list-tags` to see available tags for categorization
+
+### Managing tasks
+
+1. Use `move` to relocate tasks between lists (Today, Upcoming, etc.)
+2. Use `delete` to remove tasks by exact name
+3. Use `delete-project` to remove projects by exact name
 
 ## Integration with Claude
 

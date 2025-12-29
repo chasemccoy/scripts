@@ -129,6 +129,36 @@ class ThingsManager {
     }
   }
 
+  // Create a new project
+  async createProject(name, options = {}) {
+    let script = `tell application "Things3"\n`
+
+    // Build properties object
+    const properties = [`name:"${name}"`]
+
+    if (options.notes) {
+      properties.push(`notes:"${options.notes}"`)
+    }
+
+    // Create the project
+    script += `  set newProject to make new project with properties {${properties.join(', ')}}\n`
+
+    // Move to area if specified
+    if (options.area) {
+      script += `  move newProject to area "${options.area}"\n`
+    }
+
+    script += `  return name of newProject\nend tell`
+
+    const result = this.runAppleScript(script)
+    if (result) {
+      console.log(`✓ Created project: ${result}`)
+      if (options.area) console.log(`  → Area: ${options.area}`)
+      return result
+    }
+    return null
+  }
+
   // Add a new task
   async addTask(name, options = {}) {
     let script = `tell application "Things3"\n`
@@ -149,14 +179,17 @@ class ThingsManager {
       properties.push(`tag names:"${tagNames}"`)
     }
 
-    // Create the todo
-    script += `  set newTodo to make new to do with properties {${properties.join(', ')}}\n`
-
-    // Move to project or area if specified
+    // Create the todo in the appropriate container
     if (options.project) {
-      script += `  move newTodo to project "${options.project}"\n`
+      script += `  tell project "${options.project}"\n`
+      script += `    set newTodo to make new to do with properties {${properties.join(', ')}}\n`
+      script += `  end tell\n`
     } else if (options.area) {
-      script += `  move newTodo to area "${options.area}"\n`
+      script += `  tell area "${options.area}"\n`
+      script += `    set newTodo to make new to do with properties {${properties.join(', ')}}\n`
+      script += `  end tell\n`
+    } else {
+      script += `  set newTodo to make new to do with properties {${properties.join(', ')}}\n`
     }
 
     // Handle scheduling
@@ -271,6 +304,90 @@ class ThingsManager {
       console.log(`\nArea "${areaName}" is empty or not found`)
     }
   }
+
+  // Delete a task by name
+  async deleteTask(taskName) {
+    const script = `
+      tell application "Things3"
+        set allTodos to (get to dos)
+        set deletedCount to 0
+
+        repeat with t in allTodos
+          try
+            if name of t is "${taskName}" then
+              delete t
+              set deletedCount to deletedCount + 1
+            end if
+          end try
+        end repeat
+
+        return deletedCount as text
+      end tell
+    `
+
+    const result = this.runAppleScript(script)
+    if (result && parseInt(result) > 0) {
+      console.log(`✓ Deleted ${result} task(s) named: ${taskName}`)
+    } else {
+      console.log(`✗ No tasks found with name: ${taskName}`)
+    }
+  }
+
+  // Move a task to a specific list
+  async moveTask(taskName, listName) {
+    const script = `
+      tell application "Things3"
+        set allTodos to (get to dos)
+        set movedCount to 0
+
+        repeat with t in allTodos
+          try
+            if name of t is "${taskName}" then
+              move t to list "${listName}"
+              set movedCount to movedCount + 1
+            end if
+          end try
+        end repeat
+
+        return movedCount as text
+      end tell
+    `
+
+    const result = this.runAppleScript(script)
+    if (result && parseInt(result) > 0) {
+      console.log(`✓ Moved ${result} task(s) named "${taskName}" to ${listName}`)
+    } else {
+      console.log(`✗ No tasks found with name: ${taskName}`)
+    }
+  }
+
+  // Delete a project by name
+  async deleteProject(projectName) {
+    const script = `
+      tell application "Things3"
+        set allProjects to (get projects)
+        set deletedCount to 0
+
+        repeat with p in allProjects
+          try
+            if name of p is "${projectName}" then
+              delete p
+              set deletedCount to deletedCount + 1
+            end if
+          end try
+        end repeat
+
+        return deletedCount as text
+      end tell
+    `
+
+    const result = this.runAppleScript(script)
+    if (result && parseInt(result) > 0) {
+      console.log(`✓ Deleted ${result} project(s) named: ${projectName}`)
+    } else {
+      console.log(`✗ No projects found with name: ${projectName}`)
+    }
+  }
 }
 
 async function main() {
@@ -331,6 +448,27 @@ async function main() {
       }
       break
 
+    case 'create-project':
+      if (args[1]) {
+        const name = args[1]
+        const options = {}
+
+        for (let i = 2; i < args.length; i++) {
+          if (args[i] === '--notes' && args[i + 1]) {
+            options.notes = args[i + 1]
+            i++
+          } else if (args[i] === '--area' && args[i + 1]) {
+            options.area = args[i + 1]
+            i++
+          }
+        }
+
+        await manager.createProject(name, options)
+      } else {
+        console.log('Usage: things-cli create-project <project-name> [options]')
+      }
+      break
+
     case 'add':
       if (args[1]) {
         const name = args[1]
@@ -372,6 +510,31 @@ async function main() {
       }
       break
 
+    case 'delete':
+      if (args[1]) {
+        await manager.deleteTask(args[1])
+      } else {
+        console.log('Usage: things-cli delete <task-name>')
+      }
+      break
+
+    case 'move':
+      if (args[1] && args[2]) {
+        await manager.moveTask(args[1], args[2])
+      } else {
+        console.log('Usage: things-cli move <task-name> <list-name>')
+        console.log('List names: Today, Upcoming, Anytime, Someday, Inbox')
+      }
+      break
+
+    case 'delete-project':
+      if (args[1]) {
+        await manager.deleteProject(args[1])
+      } else {
+        console.log('Usage: things-cli delete-project <project-name>')
+      }
+      break
+
     default:
       console.log(`
 Things CLI Tool
@@ -387,8 +550,14 @@ Usage:
   things-cli show-someday                        - Show someday tasks
   things-cli show-project <project-name>         - Show tasks in a project
   things-cli show-area <area-name>               - Show tasks in an area
+  things-cli create-project <project-name> [options] - Create a new project
   things-cli add <task-name> [options]           - Add a new task
   things-cli search <query>                      - Search for tasks
+  things-cli delete <task-name>                  - Delete a task by exact name
+
+Create Project Options:
+  --notes "Note text"          Add notes to the project
+  --area "Area Name"           Add project to a specific area
 
 Add Task Options:
   --notes "Note text"          Add notes to the task
@@ -402,10 +571,12 @@ Examples:
   things-cli list-areas
   things-cli list-projects "Personal"
   things-cli show-today
+  things-cli create-project "Website Redesign" --area "Work"
   things-cli add "Review PR" --project "Development" --tags "code review"
   things-cli add "Call dentist" --list "Today" --notes "Schedule cleaning"
   things-cli search "meeting"
   things-cli show-project "Website Redesign"
+  things-cli delete "Optometry appointment"
       `)
   }
 }

@@ -119,3 +119,8 @@ Friday, Jan 2:
 - Recurring events show actual occurrence dates, not base dates
 - When adding events, use `list-calendars` to see available calendar names
 - **Use sentence case for event titles** (e.g., "Design review" not "Design Review"). Proper nouns should still be capitalized (e.g., "Meeting with Sarah")
+
+## User preferences
+
+- Work day: 9am-5pm
+- Meeting preferences: 10am-4pm (avoid meetings before 10am or after 4pm when possible)

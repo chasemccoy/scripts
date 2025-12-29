@@ -216,6 +216,20 @@ When adding new locations to an existing map:
    - `coordinates: lat, lon` (required)
 3. The map automatically updates
 
+## Writing Voice and Perspective
+
+**CRITICAL: All notes must be written from Chase's first-person perspective.**
+
+When creating or editing notes:
+- Write as if Chase is writing for himself
+- Use first person ("I", "my", "me")
+- Adopt Chase's voice and thinking style
+- Notes are personal knowledge, not documentation written about Chase
+- Example: "I think this approach..." NOT "Chase thinks this approach..."
+- Example: "This reminds me of..." NOT "This might remind the user of..."
+
+These are personal notes in Chase's vault, not third-party documentation.
+
 ## Important
 
 - Use absolute paths
