@@ -36,9 +36,10 @@ Skills extend agent capabilities with specialized workflows and tool integration
 - **[Enchiridion](./skills/enchiridion/)** - SQLite-based knowledge repository for links, references, and research with linked records.
 - **[Apple Notes](./skills/apple-notes/)** - Interact with macOS Notes via AppleScript for search, creation, and editing.
 
-#### ✅ Task management
+#### ✅ Tasks and scheduling 
 
 - **[Things](./skills/things/)** - Manage tasks in Things 3 via AppleScript. List projects/areas, add tasks, search, and view lists.
+- **[Calendar](./skills/calendar/)** - Access and manage macOS Calendar events via EventKit. View schedules, create events, properly handles recurring events.
 
 #### 💻 Development
 
@@ -56,6 +57,7 @@ scripts/
 └── skills/            # Claude Code skills
     ├── apple-notes/
     ├── blogging/
+    ├── calendar/
     ├── enchiridion/
     ├── lab/
     ├── log/
