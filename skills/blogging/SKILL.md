@@ -47,6 +47,11 @@ node /Users/chase/Repositories/scripts/skills/blogging/blog-cli.js create "slug"
 
 Date is automatically set to today. Use `--date YYYY-MM-DD` to specify a different date.
 
+**After creating a new post, open it in iA Writer:**
+```bash
+open -a "iA Writer" ~/Repositories/www/posts/YYYY-MM-DD-slug.md
+```
+
 ### Edit Post
 Update the content of an existing post by slug. Preserves frontmatter:
 ```bash
@@ -93,7 +98,8 @@ When asked to review a post for style conformance:
 
 ### Creating Content
 1. Use `create` with a slug and optional title
-2. Content can be added after creation using `edit`
+2. Open the created file in iA Writer for editing
+3. Content can also be added after creation using `edit`
 
 ### Updating Posts
 1. First `get` the current content if needed

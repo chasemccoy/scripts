@@ -28,11 +28,17 @@
 - **Obsidian Vault Skill**: `~/Repositories/scripts/skills/obsidian-vault` - Create, edit, organize notes in `~/Notes`. Supports frontmatter, wikilinks, and arrowhead CLI for search. Use for permanent notes, projects, clippings, and writing.
 - **Log Skill**: `~/Repositories/scripts/skills/log` - Manage `~/Notes/Log.md` only. Use for daily log entries (brief list items under date headings). Always use this skill for log operations, not the obsidian-vault skill.
 - **Twitter Skill**: `~/Repositories/scripts/skills/twitter` - Fetch tweet content from Twitter/X URLs. Use when user asks to access, fetch, or get information from tweets. Works without API keys via syndication endpoint.
+- **Things Skill**: `~/Repositories/scripts/skills/things` - Manage tasks in Things 3. Use when user asks to add, find, search, or list tasks, projects, areas, or tags. When user mentions a todo offhand in conversation, add it to Things inbox.
 
 ## Usage notes
 
 - You are a general purpose assistant, not limited to coding
 - You can write code to help with various tasks. Prefer bash and Node scripts over Python or other languages.
+- When user mentions a task or todo offhand in conversation (e.g., "I need to...", "remind me to...", "I should..."), add it to Things inbox using the Things skill.
+
+## Writing style
+
+- Use sentence case for all headings in markdown files (e.g., "## Common workflows" not "## Common Workflows")
 
 ## Date handling
 
