@@ -41,7 +41,7 @@ node ~/Repositories/scripts/skills/calendar/calendar-cli.js list-calendars
 Create new calendar events:
 
 ```bash
-node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Event Title" --date 2026-01-05 --time "2:30 PM" --duration 60 --calendar "Calendar Name"
+node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Event title" --date 2026-01-05 --time "2:30 PM" --duration 60 --calendar "Calendar Name"
 ```
 
 **Options:**
@@ -54,17 +54,17 @@ node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Event Title" --
 
 All-day event:
 ```bash
-node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Team Offsite" --date 2026-01-10
+node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Team offsite" --date 2026-01-10
 ```
 
 Timed event:
 ```bash
-node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Design Review" --date 2026-01-08 --time "2:30 PM" --duration 90
+node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Design review" --date 2026-01-08 --time "2:30 PM" --duration 90
 ```
 
 Event in specific calendar:
 ```bash
-node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Personal Appointment" --date 2026-01-09 --time "11:00 AM" --calendar "Personal"
+node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Personal appointment" --date 2026-01-09 --time "11:00 AM" --calendar "Personal"
 ```
 
 ### Delete events
@@ -72,7 +72,7 @@ node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Personal Appoin
 Delete an event by exact title and date:
 
 ```bash
-node ~/Repositories/scripts/skills/calendar/calendar-cli.js delete "Event Title" --date 2026-01-05
+node ~/Repositories/scripts/skills/calendar/calendar-cli.js delete "Event title" --date 2026-01-05
 ```
 
 **IMPORTANT SAFETY NOTES:**
@@ -86,7 +86,7 @@ node ~/Repositories/scripts/skills/calendar/calendar-cli.js delete "Event Title"
 
 **Example:**
 ```bash
-node ~/Repositories/scripts/skills/calendar/calendar-cli.js delete "Test Event" --date 2026-01-10
+node ~/Repositories/scripts/skills/calendar/calendar-cli.js delete "Test event" --date 2026-01-10
 ```
 
 ## Implementation details
@@ -118,3 +118,4 @@ Friday, Jan 2:
 - Events are sorted chronologically
 - Recurring events show actual occurrence dates, not base dates
 - When adding events, use `list-calendars` to see available calendar names
+- **Use sentence case for event titles** (e.g., "Design review" not "Design Review"). Proper nouns should still be capitalized (e.g., "Meeting with Sarah")
