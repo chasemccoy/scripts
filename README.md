@@ -10,6 +10,21 @@ This repository contains:
 - **Global scripts** - Command-line utilities and automation
 - **Skills** - Domain-specific knowledge and workflows for Claude Code
 
+## Setup
+
+Run the setup script to create symlinks from this repo to `~/.claude`:
+
+```bash
+cd ~/Repositories/scripts
+./setup.sh
+```
+
+This creates:
+- `~/.claude/CLAUDE.md` → `~/Repositories/scripts/CLAUDE.md`
+- `~/.claude/skills/` → `~/Repositories/scripts/skills/`
+
+Existing files are backed up automatically.
+
 ## Claude configuration
 
 ### CLAUDE.md
@@ -54,6 +69,7 @@ Skills extend agent capabilities with specialized workflows and tool integration
 ```
 scripts/
 ├── CLAUDE.md          # Main configuration
+├── setup.sh           # Setup script for symlinks
 └── skills/            # Claude Code skills
     ├── apple-notes/
     ├── blogging/
