@@ -73,7 +73,7 @@ Content starts here.
 
 **Rules:**
 - Must be at the very top of the file
-- Common fields: `created`, `tags`, `aliases`
+- Common fields: `created`, `description`, `tags`, `aliases`
 - Preserve existing frontmatter unless asked to modify
 - **No `title` property or `# Title` header** - filename IS the title
 

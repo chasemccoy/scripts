@@ -66,6 +66,36 @@ node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-project 
 node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-area "Area Name"
 ```
 
+### View completed tasks (logbook)
+
+Show recent completed tasks from the logbook:
+```bash
+node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook
+```
+
+Show more/fewer completed tasks (default is 50):
+```bash
+node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook 100
+```
+
+Show completed tasks for a specific project:
+```bash
+node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook-project "Project Name"
+```
+
+Show completed tasks for a specific area:
+```bash
+node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook-area "Area Name"
+```
+
+Limit results for project/area (default is 50):
+```bash
+node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook-project "Project Name" 25
+node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook-area "Area Name" 25
+```
+
+**Note:** Completed tasks include their completion date, project, and area information.
+
 ### Add tasks
 
 Create new tasks with optional organization and metadata:
@@ -189,6 +219,8 @@ Before adding a task, check available projects and areas:
 1. Use `search` to find tasks by name
 2. Use `show-project` or `show-area` to see tasks in specific containers
 3. Use `show-today`, `show-upcoming`, etc. to see tasks in built-in lists
+4. Use `show-logbook` to see completed tasks
+5. Use `show-logbook-project` or `show-logbook-area` to see completed tasks for specific containers
 
 ### Understanding organization
 

@@ -305,6 +305,125 @@ class ThingsManager {
     }
   }
 
+  // Show completed tasks from logbook
+  async showLogbook(limit = 50) {
+    const script = `
+      tell application "Things3"
+        set todoList to {}
+        set counter to 0
+        repeat with t in to dos of list "Logbook"
+          if counter ≥ ${limit} then exit repeat
+          set todoInfo to name of t
+
+          try
+            set completionDate to completion date of t
+            set todoInfo to todoInfo & " (completed: " & (completionDate as date as string) & ")"
+          end try
+
+          try
+            set projectName to name of project of t
+            set todoInfo to todoInfo & " [" & projectName & "]"
+          end try
+
+          try
+            set areaName to name of area of t
+            set todoInfo to todoInfo & " (" & areaName & ")"
+          end try
+
+          set end of todoList to todoInfo
+          set counter to counter + 1
+        end repeat
+        set AppleScript's text item delimiters to linefeed
+        return todoList as text
+      end tell
+    `
+
+    const result = this.runAppleScript(script)
+    if (result && result !== '') {
+      const todos = result.split('\n').filter(t => t.trim())
+      console.log(`\nLogbook - Recent Completed Tasks (${todos.length}):\n`)
+      todos.forEach(todo => console.log(`  ✓ ${todo}`))
+    } else {
+      console.log(`\nLogbook is empty`)
+    }
+  }
+
+  // Show completed tasks for a specific project
+  async showLogbookProject(projectName, limit = 50) {
+    const script = `
+      tell application "Things3"
+        set todoList to {}
+        set counter to 0
+        repeat with t in to dos of list "Logbook"
+          if counter ≥ ${limit} then exit repeat
+          try
+            set projName to name of project of t
+            if projName is "${projectName}" then
+              set todoInfo to name of t
+              try
+                set completionDate to completion date of t
+                set todoInfo to todoInfo & " (completed: " & (completionDate as date as string) & ")"
+              end try
+              set end of todoList to todoInfo
+              set counter to counter + 1
+            end if
+          end try
+        end repeat
+        set AppleScript's text item delimiters to linefeed
+        return todoList as text
+      end tell
+    `
+
+    const result = this.runAppleScript(script)
+    if (result && result !== '') {
+      const todos = result.split('\n').filter(t => t.trim())
+      console.log(`\nCompleted tasks in project "${projectName}" (${todos.length}):\n`)
+      todos.forEach(todo => console.log(`  ✓ ${todo}`))
+    } else {
+      console.log(`\nNo completed tasks found for project "${projectName}"`)
+    }
+  }
+
+  // Show completed tasks for a specific area
+  async showLogbookArea(areaName, limit = 50) {
+    const script = `
+      tell application "Things3"
+        set todoList to {}
+        set counter to 0
+        repeat with t in to dos of list "Logbook"
+          if counter ≥ ${limit} then exit repeat
+          try
+            set arName to name of area of t
+            if arName is "${areaName}" then
+              set todoInfo to name of t
+              try
+                set completionDate to completion date of t
+                set todoInfo to todoInfo & " (completed: " & (completionDate as date as string) & ")"
+              end try
+              try
+                set projectName to name of project of t
+                set todoInfo to todoInfo & " [" & projectName & "]"
+              end try
+              set end of todoList to todoInfo
+              set counter to counter + 1
+            end if
+          end try
+        end repeat
+        set AppleScript's text item delimiters to linefeed
+        return todoList as text
+      end tell
+    `
+
+    const result = this.runAppleScript(script)
+    if (result && result !== '') {
+      const todos = result.split('\n').filter(t => t.trim())
+      console.log(`\nCompleted tasks in area "${areaName}" (${todos.length}):\n`)
+      todos.forEach(todo => console.log(`  ✓ ${todo}`))
+    } else {
+      console.log(`\nNo completed tasks found for area "${areaName}"`)
+    }
+  }
+
   // Delete a task by name
   async deleteTask(taskName) {
     const script = `
@@ -448,6 +567,29 @@ async function main() {
       }
       break
 
+    case 'show-logbook':
+      const logbookLimit = args[1] ? parseInt(args[1]) : 50
+      await manager.showLogbook(logbookLimit)
+      break
+
+    case 'show-logbook-project':
+      if (args[1]) {
+        const projectLimit = args[2] ? parseInt(args[2]) : 50
+        await manager.showLogbookProject(args[1], projectLimit)
+      } else {
+        console.log('Usage: things-cli show-logbook-project <project-name> [limit]')
+      }
+      break
+
+    case 'show-logbook-area':
+      if (args[1]) {
+        const areaLimit = args[2] ? parseInt(args[2]) : 50
+        await manager.showLogbookArea(args[1], areaLimit)
+      } else {
+        console.log('Usage: things-cli show-logbook-area <area-name> [limit]')
+      }
+      break
+
     case 'create-project':
       if (args[1]) {
         const name = args[1]
@@ -550,6 +692,9 @@ Usage:
   things-cli show-someday                        - Show someday tasks
   things-cli show-project <project-name>         - Show tasks in a project
   things-cli show-area <area-name>               - Show tasks in an area
+  things-cli show-logbook [limit]                - Show completed tasks from logbook (default 50)
+  things-cli show-logbook-project <project-name> [limit] - Show completed tasks for a project
+  things-cli show-logbook-area <area-name> [limit]       - Show completed tasks for an area
   things-cli create-project <project-name> [options] - Create a new project
   things-cli add <task-name> [options]           - Add a new task
   things-cli search <query>                      - Search for tasks
