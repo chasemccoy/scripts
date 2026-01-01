@@ -74,6 +74,7 @@ Content starts here.
 **Rules:**
 - Must be at the very top of the file
 - Common fields: `created`, `description`, `tags`, `aliases`
+- Notes in the Projects directory must have a `description` frontmatter field
 - Preserve existing frontmatter unless asked to modify
 - **No `title` property or `# Title` header** - filename IS the title
 

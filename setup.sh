@@ -39,7 +39,21 @@ else
     echo "✓ Created skills symlink"
 fi
 
+# Symlink commands directory
+if [ -L "$CLAUDE_DIR/commands" ]; then
+    echo "✓ commands symlink already exists"
+elif [ -d "$CLAUDE_DIR/commands" ]; then
+    echo "⚠ Backing up existing commands directory to commands.backup"
+    mv "$CLAUDE_DIR/commands" "$CLAUDE_DIR/commands.backup"
+    ln -s "$SCRIPT_DIR/commands" "$CLAUDE_DIR/commands"
+    echo "✓ Created commands symlink"
+else
+    ln -s "$SCRIPT_DIR/commands" "$CLAUDE_DIR/commands"
+    echo "✓ Created commands symlink"
+fi
+
 echo ""
 echo "Setup complete! Claude Code will now use:"
 echo "  • Configuration: $SCRIPT_DIR/CLAUDE.md"
 echo "  • Skills: $SCRIPT_DIR/skills"
+echo "  • Commands: $SCRIPT_DIR/commands"
