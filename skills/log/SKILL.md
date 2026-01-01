@@ -53,6 +53,8 @@ Edit tool:
 - new_string: "## Wednesday, November 5\n- New entry"  # No blank line after heading
 ```
 
+NEVER include `---` in old_string or new_string when editing
+
 **Alternative** (match first entry, riskier due to whitespace):
 ```
 Read shows: "     2→- [Existing entry]"

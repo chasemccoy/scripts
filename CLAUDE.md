@@ -27,7 +27,7 @@
 - **Agent Sessions Skill**: `~/Repositories/scripts/skills/agent-sessions` - Manage persistent session logs and memories for AI agents in `~/Notes/Agents/`. Use when you need to save work context across conversations, resume from previous sessions, or maintain long-term memory. 
 - **Apple Notes Skill**: `~/Repositories/scripts/skills/apple-notes`
 - **Blogging Skill**: `~/Repositories/scripts/skills/blogging`
-- **Calendar Skill**: `~/Repositories/scripts/skills/calendar` - Access and manage macOS Calendar events. Use when user asks about calendar events, schedule, upcoming meetings, or wants to create new events. Properly handles recurring events via EventKit.
+- **Calendar Skill**: `~/Repositories/scripts/skills/calendar` - Access and manage macOS Calendar events. Use when user asks about calendar events, schedule, upcoming meetings, or wants to create new events.
 - **Lab Skill**: `~/Repositories/scripts/skills/lab`
 - **Enchiridion Skill**: `~/Repositories/scripts/skills/enchiridion` - ALWAYS use this skill when user asks to search, create, update, link, or query records in Enchiridion. DO NOT use MCP tools directly. Enchiridion is a knowledge repository for long-term storage of links, references, sources, and research. Records can be artifacts, entities, or concepts, linked via predicates.
 - **Obsidian Vault Skill**: `~/Repositories/scripts/skills/obsidian-vault` - Create, edit, organize notes in `~/Notes`. Supports frontmatter, wikilinks, and arrowhead CLI for search. Use for permanent notes, projects, clippings, and writing.

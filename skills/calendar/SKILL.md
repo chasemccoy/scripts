@@ -1,6 +1,10 @@
+---
+description: Access and manage macOS Calendar events. Use when user asks about calendar events, schedule, upcoming meetings, or wants to create new events.
+---
+
 # Calendar access
 
-Access and manage macOS Calendar events via EventKit. Properly handles recurring events.
+Access and manage macOS Calendar events via EventKit.
 
 ## Script location
 
