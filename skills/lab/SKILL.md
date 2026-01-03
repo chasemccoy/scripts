@@ -10,8 +10,8 @@ Interact with code examples in `~/Repositories/lab/data/` directory. The lab is 
 
 ## Project Location
 
-Lab directory: `/Users/chase/Repositories/lab`
-Examples directory: `/Users/chase/Repositories/lab/data`
+Lab directory: `~/Repositories/lab`
+Examples directory: `~/Repositories/lab/data`
 
 ## Example Formats
 
@@ -82,25 +82,25 @@ export default function ExampleComponent() {
 ### List All Examples
 
 ```bash
-ls /Users/chase/Repositories/lab/data/
+ls ~/Repositories/lab/data/
 ```
 
 ### Search Examples by Pattern
 
 ```bash
-ls /Users/chase/Repositories/lab/data/ | grep "pattern"
+ls ~/Repositories/lab/data/ | grep "pattern"
 ```
 
 ### View Example Metadata
 
 For HTML files, read the frontmatter:
 ```bash
-head -20 /Users/chase/Repositories/lab/data/example-name.html
+head -20 ~/Repositories/lab/data/example-name.html
 ```
 
 For React files, read the meta export:
 ```bash
-head -10 /Users/chase/Repositories/lab/data/example-name.jsx
+head -10 ~/Repositories/lab/data/example-name.jsx
 ```
 
 ### Create New HTML Example
@@ -155,4 +155,4 @@ After creating a new example:
 
 1. The file is automatically discovered (no config updates needed)
 2. Accessible at: `http://localhost:5173/slug-name`
-3. To test locally: `cd /Users/chase/Repositories/lab && yarn dev`
+3. To test locally: `cd ~/Repositories/lab && yarn dev`

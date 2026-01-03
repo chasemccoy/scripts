@@ -10,7 +10,7 @@ Interact with Things 3 task manager using AppleScript via the CLI. Provides awar
 
 ## Script location
 
-`/Users/chase/Repositories/scripts/skills/things/things-cli.js`
+`~/Repositories/scripts/skills/things/things-cli.js`
 
 ## Available commands
 
@@ -19,19 +19,19 @@ Interact with Things 3 task manager using AppleScript via the CLI. Provides awar
 Get lists of areas, projects, and tags to understand the user's task organization:
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js list-areas
+node ~/Repositories/scripts/skills/things/things-cli.js list-areas
 ```
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js list-projects
+node ~/Repositories/scripts/skills/things/things-cli.js list-projects
 ```
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js list-projects "Area Name"
+node ~/Repositories/scripts/skills/things/things-cli.js list-projects "Area Name"
 ```
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js list-tags
+node ~/Repositories/scripts/skills/things/things-cli.js list-tags
 ```
 
 ### View tasks
@@ -39,59 +39,59 @@ node /Users/chase/Repositories/scripts/skills/things/things-cli.js list-tags
 Show tasks from built-in lists or specific projects/areas:
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-today
+node ~/Repositories/scripts/skills/things/things-cli.js show-today
 ```
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-upcoming
+node ~/Repositories/scripts/skills/things/things-cli.js show-upcoming
 ```
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-inbox
+node ~/Repositories/scripts/skills/things/things-cli.js show-inbox
 ```
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-anytime
+node ~/Repositories/scripts/skills/things/things-cli.js show-anytime
 ```
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-someday
+node ~/Repositories/scripts/skills/things/things-cli.js show-someday
 ```
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-project "Project Name"
+node ~/Repositories/scripts/skills/things/things-cli.js show-project "Project Name"
 ```
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-area "Area Name"
+node ~/Repositories/scripts/skills/things/things-cli.js show-area "Area Name"
 ```
 
 ### View completed tasks (logbook)
 
 Show recent completed tasks from the logbook:
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook
+node ~/Repositories/scripts/skills/things/things-cli.js show-logbook
 ```
 
 Show more/fewer completed tasks (default is 50):
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook 100
+node ~/Repositories/scripts/skills/things/things-cli.js show-logbook 100
 ```
 
 Show completed tasks for a specific project:
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook-project "Project Name"
+node ~/Repositories/scripts/skills/things/things-cli.js show-logbook-project "Project Name"
 ```
 
 Show completed tasks for a specific area:
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook-area "Area Name"
+node ~/Repositories/scripts/skills/things/things-cli.js show-logbook-area "Area Name"
 ```
 
 Limit results for project/area (default is 50):
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook-project "Project Name" 25
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook-area "Area Name" 25
+node ~/Repositories/scripts/skills/things/things-cli.js show-logbook-project "Project Name" 25
+node ~/Repositories/scripts/skills/things/things-cli.js show-logbook-area "Area Name" 25
 ```
 
 **Note:** Completed tasks include their completion date, project, and area information.
@@ -101,42 +101,42 @@ node /Users/chase/Repositories/scripts/skills/things/things-cli.js show-logbook-
 Create new tasks with optional organization and metadata:
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js add "Task name"
+node ~/Repositories/scripts/skills/things/things-cli.js add "Task name"
 ```
 
 Add task with notes:
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js add "Task name" --notes "Additional details"
+node ~/Repositories/scripts/skills/things/things-cli.js add "Task name" --notes "Additional details"
 ```
 
 Add task to project:
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js add "Task name" --project "Project Name"
+node ~/Repositories/scripts/skills/things/things-cli.js add "Task name" --project "Project Name"
 ```
 
 Add task to area:
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js add "Task name" --area "Area Name"
+node ~/Repositories/scripts/skills/things/things-cli.js add "Task name" --area "Area Name"
 ```
 
 Add task with tags:
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js add "Task name" --tags "tag1, tag2"
+node ~/Repositories/scripts/skills/things/things-cli.js add "Task name" --tags "tag1, tag2"
 ```
 
 Add task to a specific list:
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js add "Task name" --list "Today"
+node ~/Repositories/scripts/skills/things/things-cli.js add "Task name" --list "Today"
 ```
 
 Add task with due date:
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js add "Task name" --due "2025-12-31"
+node ~/Repositories/scripts/skills/things/things-cli.js add "Task name" --due "2025-12-31"
 ```
 
 Combine options:
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js add "Review PR" --project "Development" --tags "code review" --when "today"
+node ~/Repositories/scripts/skills/things/things-cli.js add "Review PR" --project "Development" --tags "code review" --when "today"
 ```
 
 ### Search tasks
@@ -144,7 +144,7 @@ node /Users/chase/Repositories/scripts/skills/things/things-cli.js add "Review P
 Find tasks by name:
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js search "query"
+node ~/Repositories/scripts/skills/things/things-cli.js search "query"
 ```
 
 ### Delete tasks
@@ -152,7 +152,7 @@ node /Users/chase/Repositories/scripts/skills/things/things-cli.js search "query
 Delete a task by exact name:
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js delete "Task name"
+node ~/Repositories/scripts/skills/things/things-cli.js delete "Task name"
 ```
 
 **Note:** Deletes all tasks with the exact matching name. Use with caution.
@@ -162,7 +162,7 @@ node /Users/chase/Repositories/scripts/skills/things/things-cli.js delete "Task 
 Delete a project by exact name:
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js delete-project "Project name"
+node ~/Repositories/scripts/skills/things/things-cli.js delete-project "Project name"
 ```
 
 **Note:** Deletes all projects with the exact matching name. Use with caution.
@@ -172,7 +172,7 @@ node /Users/chase/Repositories/scripts/skills/things/things-cli.js delete-projec
 Move a task to a different list:
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/things/things-cli.js move "Task name" "Today"
+node ~/Repositories/scripts/skills/things/things-cli.js move "Task name" "Today"
 ```
 
 **List options:** Today, Upcoming, Anytime, Someday, Inbox

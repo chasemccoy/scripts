@@ -10,23 +10,23 @@ Access tweet content from Twitter/X URLs using the syndication API, which works 
 
 ## Script Location
 
-`/Users/chase/Repositories/scripts/skills/twitter/fetchTweet.js`
+`~/Repositories/scripts/skills/twitter/fetchTweet.js`
 
 ## Usage
 
 ### Fetch Tweet by URL or ID
 
 ```bash
-node /Users/chase/Repositories/scripts/skills/twitter/fetchTweet.js <tweet-url-or-id>
+node ~/Repositories/scripts/skills/twitter/fetchTweet.js <tweet-url-or-id>
 ```
 
 **Examples:**
 ```bash
 # Using full URL
-node /Users/chase/Repositories/scripts/skills/twitter/fetchTweet.js "https://x.com/username/status/1234567890"
+node ~/Repositories/scripts/skills/twitter/fetchTweet.js "https://x.com/username/status/1234567890"
 
 # Using tweet ID only
-node /Users/chase/Repositories/scripts/skills/twitter/fetchTweet.js "1234567890"
+node ~/Repositories/scripts/skills/twitter/fetchTweet.js "1234567890"
 ```
 
 ## Response Format

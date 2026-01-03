@@ -10,7 +10,7 @@ Interact with blog posts at `~/Repositories/www/posts/` using the CLI script. Po
 
 ## Script Location
 
-`/Users/chase/Repositories/scripts/skills/blogging/blog-cli.js`
+`~/Repositories/scripts/skills/blogging/blog-cli.js`
 
 ## Post Format
 
@@ -24,25 +24,25 @@ Interact with blog posts at `~/Repositories/www/posts/` using the CLI script. Po
 ### List All Posts
 Get a list of all blog posts with dates, slugs, and titles:
 ```bash
-node /Users/chase/Repositories/scripts/skills/blogging/blog-cli.js list
+node ~/Repositories/scripts/skills/blogging/blog-cli.js list
 ```
 
 ### Search Posts
 Search for posts by slug, title, or content:
 ```bash
-node /Users/chase/Repositories/scripts/skills/blogging/blog-cli.js search "query"
+node ~/Repositories/scripts/skills/blogging/blog-cli.js search "query"
 ```
 
 ### Get Post Content
 Retrieve the full content of a specific post by slug:
 ```bash
-node /Users/chase/Repositories/scripts/skills/blogging/blog-cli.js get "slug"
+node ~/Repositories/scripts/skills/blogging/blog-cli.js get "slug"
 ```
 
 ### Create Post
 Create a new post with slug and optional title:
 ```bash
-node /Users/chase/Repositories/scripts/skills/blogging/blog-cli.js create "slug" --title "Post Title"
+node ~/Repositories/scripts/skills/blogging/blog-cli.js create "slug" --title "Post Title"
 ```
 
 Date is automatically set to today. Use `--date YYYY-MM-DD` to specify a different date.
@@ -55,20 +55,20 @@ open -a "iA Writer" ~/Repositories/www/posts/YYYY-MM-DD-slug.md
 ### Edit Post
 Update the content of an existing post by slug. Preserves frontmatter:
 ```bash
-node /Users/chase/Repositories/scripts/skills/blogging/blog-cli.js edit "slug" "New content"
+node ~/Repositories/scripts/skills/blogging/blog-cli.js edit "slug" "New content"
 ```
 
 ### Convert to Folder
 Convert a single file post to a folder with `index.md`:
 ```bash
-node /Users/chase/Repositories/scripts/skills/blogging/blog-cli.js convert-to-folder "slug"
+node ~/Repositories/scripts/skills/blogging/blog-cli.js convert-to-folder "slug"
 ```
 
 This is useful when you want to add images or other assets to a post.
 
 ## Style Guide Review
 
-A personal style guide is available at `/Users/chase/Repositories/scripts/skills/blogging/STYLE_GUIDE.md`.
+A personal style guide is available at `~/Repositories/scripts/skills/blogging/STYLE_GUIDE.md`.
 
 When asked to review a post for style conformance:
 1. Read the post using the `get` command

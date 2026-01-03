@@ -10,30 +10,30 @@ Access Arc browser tabs organized by space or folder. Uses StorableSidebar.json 
 
 ## Script location
 
-`/Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js`
+`~/Repositories/scripts/skills/arc-browser/arc-tabs.js`
 
 ## CLI usage
 
-All commands use: `node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js [options]`
+All commands use: `node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js [options]`
 
 ### Basic commands
 
 **List all spaces** (hierarchical with folders):
 ```bash
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --json
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js --json
 ```
 
 **Get specific space**:
 ```bash
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --space "HQ"
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --space "Research" --json
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js --space "HQ"
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js --space "Research" --json
 ```
 
 **List all folders** (flat map view):
 ```bash
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --folders
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --folders --folder "Inbox"
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js --folders
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js --folders --folder "Inbox"
 ```
 
 ### Filtering tabs
@@ -41,25 +41,25 @@ node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --folders 
 **Filter by pinned status**:
 ```bash
 # Get all unpinned tabs
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --unpinned
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js --unpinned
 
 # Get all pinned tabs
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --pinned
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js --pinned
 
 # Unpinned tabs in HQ space
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --space "HQ" --unpinned
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js --space "HQ" --unpinned
 ```
 
 **Filter by activity date**:
 ```bash
 # Tabs active in past 7 days
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --active-after "2025-12-24T00:00:00Z"
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js --active-after "2025-12-24T00:00:00Z"
 
 # Tabs not active in 30 days
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js --active-before "2025-12-01T00:00:00Z"
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js --active-before "2025-12-01T00:00:00Z"
 
 # Unpinned tabs from HQ active in past week
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js \
   --space "HQ" \
   --unpinned \
   --active-after "2025-12-24T00:00:00Z"
@@ -68,25 +68,25 @@ node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
 **Filter by creation date**:
 ```bash
 # Tabs created in December 2025
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js \
   --created-after "2025-12-01T00:00:00Z" \
   --created-before "2026-01-01T00:00:00Z"
 
 # Old tabs (created before 2024)
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js \
   --created-before "2024-01-01T00:00:00Z"
 ```
 
 **Combine multiple filters**:
 ```bash
 # Stale unpinned tabs (old, not recently viewed)
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js \
   --unpinned \
   --created-before "2025-06-01T00:00:00Z" \
   --active-before "2025-12-01T00:00:00Z"
 
 # Recently created and active tabs in specific space
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js \
   --space "Research" \
   --created-after "2025-12-01T00:00:00Z" \
   --active-after "2025-12-20T00:00:00Z" \
@@ -241,7 +241,7 @@ Total tabs: 1013
 The script can also be used as a Node.js module:
 
 ```javascript
-const ArcTabOrganizer = require('/Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js');
+const ArcTabOrganizer = require('~/Repositories/scripts/skills/arc-browser/arc-tabs.js');
 
 const arc = new ArcTabOrganizer();
 
@@ -288,7 +288,7 @@ const folderResults = arc.searchTabsInFolders('design');
 ### Find stale tabs to close
 ```bash
 # Unpinned tabs not viewed in 30 days
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js \
   --unpinned \
   --active-before "2025-12-01T00:00:00Z" \
   --json
@@ -297,7 +297,7 @@ node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
 ### Get recent activity from a space
 ```bash
 # Tabs from HQ active in past week
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js \
   --space "HQ" \
   --active-after "2025-12-24T00:00:00Z" \
   --json
@@ -306,7 +306,7 @@ node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
 ### Analyze old but active tabs
 ```bash
 # Tabs created >6 months ago but active in past week
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js \
   --created-before "2025-06-01T00:00:00Z" \
   --active-after "2025-12-24T00:00:00Z" \
   --json
@@ -315,7 +315,7 @@ node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
 ### Find tabs from specific time period
 ```bash
 # All tabs created in December 2025
-node /Users/chase/Repositories/scripts/skills/arc-browser/arc-tabs.js \
+node ~/Repositories/scripts/skills/arc-browser/arc-tabs.js \
   --created-after "2025-12-01T00:00:00Z" \
   --created-before "2026-01-01T00:00:00Z" \
   --json

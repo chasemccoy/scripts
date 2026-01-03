@@ -10,38 +10,38 @@ Interact with Apple Notes using the CLI script to search, create, edit, list, an
 
 ## Script Location
 
-`/Users/chase/.claude/skills/apple-notes/apple-notes-cli.js`
+`~/.claude/skills/apple-notes/apple-notes-cli.js`
 
 ## Available Commands
 
 ### Search Notes
 Search for notes by title or content:
 ```bash
-node /Users/chase/.claude/skills/apple-notes/apple-notes-cli.js search "query"
+node ~/.claude/skills/apple-notes/apple-notes-cli.js search "query"
 ```
 
 ### List All Notes
 Get a list of all note titles:
 ```bash
-node /Users/chase/.claude/skills/apple-notes/apple-notes-cli.js list
+node ~/.claude/skills/apple-notes/apple-notes-cli.js list
 ```
 
 ### Get Note Content
 Retrieve the full content of a specific note by title:
 ```bash
-node /Users/chase/.claude/skills/apple-notes/apple-notes-cli.js get "Note Title"
+node ~/.claude/skills/apple-notes/apple-notes-cli.js get "Note Title"
 ```
 
 ### Create Note
 Create a new note with title and optional body:
 ```bash
-node /Users/chase/.claude/skills/apple-notes/apple-notes-cli.js create "Note Title" "Note body content"
+node ~/.claude/skills/apple-notes/apple-notes-cli.js create "Note Title" "Note body content"
 ```
 
 ### Edit Note
 Update the body of an existing note:
 ```bash
-node /Users/chase/.claude/skills/apple-notes/apple-notes-cli.js edit "Note Title" "New body content"
+node ~/.claude/skills/apple-notes/apple-notes-cli.js edit "Note Title" "New body content"
 ```
 
 ## Usage Notes

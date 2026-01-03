@@ -8,7 +8,7 @@ version: 1.0.0
 
 ## Vault setup
 
-**VAULT PATH**: `/Users/chase/Notes`
+**VAULT PATH**: `~/Notes`
 
 **LOG HANDLING**: Log.md and log entries are managed by the dedicated `log` skill, not this skill.
 
@@ -113,7 +113,7 @@ This works without any text - just the URL in image syntax. The Obsidian tweet e
 
 ### Images and attachments
 
-**Storage**: `/Users/chase/Notes/assets/` (flat structure)
+**Storage**: `~/Notes/assets/` (flat structure)
 
 **Embedding** (prefer wikilink syntax):
 ```markdown
@@ -123,7 +123,7 @@ This works without any text - just the URL in image syntax. The Obsidian tweet e
 
 **Adding images**:
 ```bash
-cp /path/to/image.jpg /Users/chase/Notes/assets/descriptive-name.jpg
+cp /path/to/image.jpg ~/Notes/assets/descriptive-name.jpg
 ```
 
 ## Core operations
@@ -144,7 +144,7 @@ Options: `--limit N`, `--format [paths|ids|json]`
 
 ### Creating notes
 
-Use **Write** tool: `/Users/chase/Notes/@Inbox/Note Name.md` 
+Use **Write** tool: `~/Notes/@Inbox/Note Name.md` 
 
 ```markdown
 ---
@@ -175,7 +175,7 @@ Pattern: vault_path + optional_subfolder + filename.md
 ### Deleting notes
 
 ```bash
-rm "/Users/chase/Notes/Note.md"
+rm "~/Notes/Note.md"
 ```
 
 Confirm with user first.
@@ -183,8 +183,8 @@ Confirm with user first.
 ### Folder operations
 
 ```bash
-mkdir -p "/Users/chase/Notes/Projects/Project Name"
-ls "/Users/chase/Notes"
+mkdir -p "~/Notes/Projects/Project Name"
+ls "~/Notes"
 ```
 
 ## Advanced features

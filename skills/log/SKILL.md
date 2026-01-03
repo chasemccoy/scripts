@@ -11,7 +11,7 @@ Interact with the user's personal log file by adding, editing, and organizing da
 
 ## Log File
 
-**LOCATION**: `/Users/chase/Notes/Log.md`
+**LOCATION**: `~/Notes/Log.md`
 
 The Log is a running markdown file for daily entries and quick captures.
 
@@ -105,7 +105,7 @@ Edit tool:
 
 Use Grep to search for keywords in Log.md:
 ```bash
-grep -i "keyword" "/Users/chase/Notes/Log.md"
+grep -i "keyword" "~/Notes/Log.md"
 ```
 
 ## Best Practices

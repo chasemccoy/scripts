@@ -11,7 +11,7 @@ Manage persistent session logs and memories for AI agents in the Obsidian vault.
 
 ## Directory
 
-**LOCATION**: `/Users/chase/Notes/Agents/`
+**LOCATION**: `~/Notes/Agents/`
 
 This folder contains markdown files for agent session logs. Each session is a note with frontmatter containing metadata about the agent's work.
 
@@ -64,7 +64,7 @@ task: string          # Brief description of the task/purpose
 1. Get current date and time using `date +"%Y-%m-%dT%H:%M:%S"`
 2. Create descriptive filename based on task (e.g., "Refactor authentication system.md")
 3. Generate session_id from date and task slug (e.g., "2025-12-30-feature-name")
-4. Write new file to `/Users/chase/Notes/Agents/[descriptive-filename].md`
+4. Write new file to `~/Notes/Agents/[descriptive-filename].md`
 5. Include all required frontmatter fields
 6. Add initial context and progress sections
 
@@ -96,7 +96,7 @@ date +"%Y-%m-%dT%H:%M:%S"
 
 ```bash
 # List all session files
-ls -1 /Users/chase/Notes/Agents/*.md
+ls -1 ~/Notes/Agents/*.md
 
 # Or use Glob for pattern matching
 ```
@@ -105,7 +105,7 @@ ls -1 /Users/chase/Notes/Agents/*.md
 
 ```bash
 # Search for keyword in all sessions
-grep -r "keyword" /Users/chase/Notes/Agents/
+grep -r "keyword" ~/Notes/Agents/
 
 # Or use Grep tool with path parameter
 ```
