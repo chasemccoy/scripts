@@ -13,7 +13,7 @@ version: 1.0.0
 **LOG HANDLING**: Log.md and log entries are managed by the dedicated `log` skill, not this skill.
 
 **Folder structure:**
-- **@Inbox**: Quick captures and unsorted notes
+- **@Inbox**: Quick captures and unsorted notes. Unless specified, new notes should be placed in this folder. 
 - **Journal**: Daily notes and time-based entries
 - **Projects**: Active projects (archive completed to `Projects/Archive/`)
 - **Slipbox**: Permanent notes and knowledge base
@@ -144,7 +144,7 @@ Options: `--limit N`, `--format [paths|ids|json]`
 
 ### Creating notes
 
-Use **Write** tool: `/Users/chase/Notes/Note Name.md`
+Use **Write** tool: `/Users/chase/Notes/@Inbox/Note Name.md` 
 
 ```markdown
 ---
@@ -255,3 +255,4 @@ When adding new locations to an existing map:
 - Frontmatter must start at first line
 - **ALWAYS link note references in your output** using obsidian:// URIs
 - Always add wikilinks in notes to cross-link to other relevant notes
+- New notes are always added to the @Inbox folder unless otherwise specified
