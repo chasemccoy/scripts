@@ -2,6 +2,7 @@
 name: obsidian-vault
 description: Manage Obsidian vault Markdown notes with frontmatter and wikilinks. Use when user asks to create, edit, delete, or organize Obsidian notes (excluding log entries, which are handled by the log skill).
 version: 1.0.0
+allowed-tools: Read, Edit, Write, Grep, Glob, Bash
 ---
 
 # Obsidian Vault Management
