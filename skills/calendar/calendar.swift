@@ -75,7 +75,7 @@ func listEvents(args: [String]) {
 }
 
 func addEvent(args: [String]) {
-    // Parse arguments: title|date|time|duration|calendar
+    // Parse arguments: title|date|time|duration|calendar|notes
     guard args.count > 2 else {
         print("ERROR: Missing event data")
         exit(1)
@@ -92,6 +92,7 @@ func addEvent(args: [String]) {
     let timeStr = parts.count > 2 ? parts[2] : ""
     let durationStr = parts.count > 3 ? parts[3] : "60"
     let calendarName = parts.count > 4 ? parts[4] : ""
+    let notes = parts.count > 5 ? parts[5] : ""
 
     // Parse date
     let dateFormatter = DateFormatter()
@@ -154,6 +155,11 @@ func addEvent(args: [String]) {
 
         let duration = Int(durationStr) ?? 60
         event.endDate = startDate.addingTimeInterval(TimeInterval(duration * 60))
+    }
+
+    // Set notes if provided
+    if !notes.isEmpty {
+        event.notes = notes
     }
 
     // Find calendar
