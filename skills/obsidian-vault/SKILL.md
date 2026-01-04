@@ -6,6 +6,8 @@ version: 1.0.0
 
 # Obsidian Vault Management
 
+**IMPORTANT**: This skill provides context and guidelines only. After invoking this skill, you MUST use the standard tools (Write, Edit, Read, Bash) to actually perform operations. The skill does not execute operations automatically.
+
 ## Vault setup
 
 **VAULT PATH**: `~/Notes`
