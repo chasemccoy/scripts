@@ -128,3 +128,5 @@ Friday, Jan 2:
 
 - Work day: 9am-5pm
 - Meeting preferences: 10am-4pm (avoid meetings before 10am or after 4pm when possible)
+- Work calendar: `chase@era.app`
+- Personal calendar: `chase@chsmc.org` (default)
