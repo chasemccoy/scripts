@@ -45,7 +45,7 @@ node ~/Repositories/scripts/skills/calendar/calendar-cli.js list-calendars
 Create new calendar events:
 
 ```bash
-node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Event title" --date 2026-01-05 --time "2:30 PM" --duration 60 --calendar "Calendar Name"
+node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Event title" --date 2026-01-05 --time "2:30 PM" --duration 60 --calendar "Calendar Name" --location "123 Main St"
 ```
 
 **Options:**
@@ -53,6 +53,8 @@ node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Event title" --
 - `--time` (optional): Time in "h:mm AM/PM" format. Omit for all-day events
 - `--duration` (optional): Duration in minutes (default: 60)
 - `--calendar` (optional): Calendar name. Defaults to "chase@chsmc.org" if not specified
+- `--location` (optional): Location/address for the event
+- `--notes` (optional): Additional notes for the event
 
 **Examples:**
 
@@ -69,6 +71,11 @@ node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Design review" 
 Event in specific calendar:
 ```bash
 node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Personal appointment" --date 2026-01-09 --time "11:00 AM" --calendar "Personal"
+```
+
+Event with location:
+```bash
+node ~/Repositories/scripts/skills/calendar/calendar-cli.js add "Team lunch" --date 2026-01-10 --time "12:00 PM" --duration 60 --location "Café Blue, 123 Main St"
 ```
 
 ### Delete events

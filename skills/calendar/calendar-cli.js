@@ -139,6 +139,7 @@ function addEvent(args) {
   let duration = '60';
   let calendar = '';
   let notes = '';
+  let location = '';
 
   // Parse flags
   for (let i = 0; i < args.length; i++) {
@@ -159,6 +160,9 @@ function addEvent(args) {
       case '--notes':
         notes = args[++i] || '';
         break;
+      case '--location':
+        location = args[++i] || '';
+        break;
     }
   }
 
@@ -167,8 +171,8 @@ function addEvent(args) {
     process.exit(1);
   }
 
-  // Build pipe-delimited string: title|date|time|duration|calendar|notes
-  const eventData = `${title}|${date}|${time}|${duration}|${calendar}|${notes}`;
+  // Build pipe-delimited string: title|date|time|duration|calendar|notes|location
+  const eventData = `${title}|${date}|${time}|${duration}|${calendar}|${notes}|${location}`;
 
   try {
     const result = execFileSync(swiftScript, ['add', eventData], {
@@ -256,7 +260,7 @@ switch (command) {
     console.log('  add              Add a new event');
     console.log('  delete           Delete an event');
     console.log('\nAdd event usage:');
-    console.log('  calendar-cli.js add "Event Title" --date 2026-01-05 [--time "2:30 PM"] [--duration 60] [--calendar "Calendar Name"] [--notes "Event notes"]');
+    console.log('  calendar-cli.js add "Event Title" --date 2026-01-05 [--time "2:30 PM"] [--duration 60] [--calendar "Calendar Name"] [--notes "Event notes"] [--location "Location"]');
     console.log('\nDelete event usage:');
     console.log('  calendar-cli.js delete "Event Title" --date 2026-01-05');
     console.log('  WARNING: Requires exact title match. Shows warning if event has attendees.');
