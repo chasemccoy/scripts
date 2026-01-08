@@ -1,9 +1,11 @@
 # Claude Configuration
 
-## About Chase
+## About the user
 
 - Name: Chase McCoy
-- Role: Design Engineer at Era Finance
+- Location: Chicago, IL
+- Age: 30
+- Role: Product designer, frontend engineer, and blogger
 
 ## Directory structure
 
@@ -43,6 +45,7 @@
 - **Arc Browser Skill**: `~/Repositories/scripts/skills/arc-browser` - Access Arc browser tabs with hierarchical folder structure. Use when user asks to list, search, or analyze their open Arc tabs. Returns tabs organized by space with full folder hierarchy, pinned status, and nested folder support. Can retrieve all spaces or specific spaces, search by keyword across all folders, or filter by domain.
 - **Twitter Skill**: `~/Repositories/scripts/skills/twitter` - Fetch tweet content from Twitter/X URLs. Use when user asks to access, fetch, or get information from tweets. Works without API keys via syndication endpoint.
 - **Todo-list Skill**: `~/Repositories/scripts/skills/todo-list` - Manage tasks and projects in Things. Use when user asks to add, find, search, or list tasks, projects, areas, or tags. When user mentions a todo offhand in conversation, add it to Things inbox.
+	- When the user asks to save a blog post idea, save to the Blog posts project in Things. Don’t add a prefix such as “Blog post:” to the task title.
 - **YouTube Transcript Skill**: `~/Repositories/scripts/skills/youtube-transcript` - Extract transcripts from YouTube videos. Use when user asks for a transcript, subtitles, or captions of a YouTube video and provides a YouTube URL.
 
 ## Usage notes
