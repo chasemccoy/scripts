@@ -1,12 +1,12 @@
 ---
-name: things
-description: Manage tasks in Things 3. Use when user asks to add, find, search, delete, or list tasks, projects, areas, or tags.
+name: todo-list
+description: Manage tasks and projects in the Things todo app. Use when user asks to add, find, search, delete, or list tasks, projects, areas, or tags.
 allowed-tools: Bash
 ---
 
-# Things task management
+# Task management
 
-Interact with Things 3 task manager using AppleScript via the CLI. Provides awareness of projects, areas, tags, and lists.
+The user uses an app called Things to manage tasks and projects. Interact with Things using AppleScript via the CLI. Provides awareness of projects, areas, tags, and lists.
 
 ## Script location
 
