@@ -24,6 +24,14 @@
 
 ## Tools, scripts, and skills
 
+**IMPORTANT: How skills work**
+- When you activate a skill, the skill provides you with instructions and documentation
+- Activating a skill does NOT automatically complete the user's request
+- You MUST read the skill instructions and then take action using the appropriate tools (Bash, Read, Edit, etc.)
+- Skills are reference documents that tell you HOW to do something - you still need to DO it
+
+### Available skills
+
 - **Agent Sessions Skill**: `~/Repositories/scripts/skills/agent-sessions` - Manage persistent session logs and memories for AI agents in `~/Notes/Agents/`. Use when you need to save work context across conversations, resume from previous sessions, or maintain long-term memory. 
 - **Apple Notes Skill**: `~/Repositories/scripts/skills/apple-notes`
 - **Blogging Skill**: `~/Repositories/scripts/skills/blogging`
