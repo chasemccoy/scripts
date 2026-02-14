@@ -1,4 +1,5 @@
 ---
+name: calendar
 description: Access and manage macOS Calendar events. Use when user asks about calendar events, schedule, upcoming meetings, or wants to create new events.
 ---
 

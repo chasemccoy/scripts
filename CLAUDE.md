@@ -7,6 +7,10 @@
 - Age: 30
 - Role: Product designer, frontend engineer, and blogger
 
+## Environment
+
+- When working with shell commands, use zsh-compatible syntax (this is macOS with zsh as default shell). Avoid bash-specific syntax like brace expansion that may not work as expected.
+
 ## Directory structure
 
 - **~/Desktop**: Screenshots and recent downloads
