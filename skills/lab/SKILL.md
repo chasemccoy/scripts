@@ -17,7 +17,7 @@ Examples directory: `~/Repositories/lab/data`
 
 ### HTML Examples
 
-HTML files with YAML frontmatter:
+HTML files with YAML frontmatter. No DOCTYPE, `<html>`, `<head>`, or `<body>` tags are needed — the file is injected directly into the page. Write `<style>` and `<script>` tags at the top level alongside your HTML:
 
 ```html
 ---
@@ -26,20 +26,15 @@ description: Optional description with **markdown** support
 tags: ["ui", "animation"]
 minHeight: "60vh"
 ---
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    /* CSS here */
-  </style>
-</head>
-<body>
-  <!-- HTML here -->
-  <script>
-    // JavaScript here
-  </script>
-</body>
-</html>
+<style>
+  /* CSS here */
+</style>
+
+<!-- HTML here -->
+
+<script>
+  // JavaScript here
+</script>
 ```
 
 **Metadata fields**:
@@ -112,22 +107,16 @@ Use the Write tool with proper frontmatter format:
 title: New Example
 tags: ["ui"]
 ---
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    body {
-      margin: 0;
-      display: grid;
-      place-items: center;
-      min-height: 100vh;
-    }
-  </style>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
-</html>
+<style>
+  body {
+    margin: 0;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+  }
+</style>
+
+<h1>Hello World</h1>
 ```
 
 ### Create New React Example
