@@ -45,22 +45,41 @@ minHeight: "60vh"
 
 ### React Examples
 
-JSX files with default export and meta export:
+JSX files with a `meta` export at the top and a default export component. React is auto-imported — use `React.useState`, `React.useEffect`, etc. from the global rather than named imports from `"react"`.
+
+Styles go in a JSX `<style>` element rendered inside the component — not inline style objects:
 
 ```jsx
 export const meta = {
   title: "Example Title",
   description: "Optional description",
-  tags: ["ui", "animation"]
+  tags: ["ui", "animation"],
 }
 
-export default function ExampleComponent() {
+const styles = (
+  <style>{`
+    .wrapper { display: flex; padding: 40px; justify-content: center; }
+  `}</style>
+)
+
+export default function Demo() {
+  const [value, setValue] = React.useState(0)
+
   return (
     <div>
-      {/* Component JSX here */}
+      {styles}
+      <div className="wrapper">Hello {value}</div>
     </div>
   )
 }
+```
+
+**CDN imports in JSX:** Use `/* @vite-ignore */` for runtime CDN imports inside `useEffect` (not at module top level, which runs during SSR):
+
+```jsx
+React.useEffect(() => {
+  import(/* @vite-ignore */ "https://cdn.jsdelivr.net/npm/some-pkg/dist/index.js").then(setModule)
+}, [])
 ```
 
 ## Naming Conventions
@@ -121,12 +140,12 @@ tags: ["ui"]
 
 ### Create New React Example
 
-Use the Write tool with proper meta export:
+Use the Write tool. The `meta` export goes at the top:
 
 ```jsx
 export const meta = {
   title: "New React Example",
-  tags: ["ui", "animation"]
+  tags: ["ui", "animation"],
 }
 
 export default function NewExample() {
@@ -143,5 +162,5 @@ export default function NewExample() {
 After creating a new example:
 
 1. The file is automatically discovered (no config updates needed)
-2. Accessible at: `http://localhost:5173/slug-name`
+2. Accessible at: `http://localhost:2000/slug-name`
 3. To test locally: `cd ~/Repositories/lab && yarn dev`
