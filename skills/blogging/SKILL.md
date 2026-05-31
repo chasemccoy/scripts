@@ -1,7 +1,7 @@
 ---
 name: blogging
 description: Manage blog posts in Markdown format. Use when user asks to search, create, edit, list, get, or review blog posts for style conformance.
-allowed-tools: Bash, Read, Write, Edit, Glob
+allowed-tools: Bash, Read, Write, Edit, Glob, AskUserQuestion
 ---
 
 # Blog Post Management
