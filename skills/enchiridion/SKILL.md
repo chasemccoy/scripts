@@ -93,15 +93,6 @@ ench links predicates              # Dump the predicate vocabulary
 ench links create '{"sourceId":123,"targetId":456,"predicate":"created_by"}'
 ```
 
-### Inbox (unpromoted Readwise documents)
-
-```bash
-ench inbox list [--limit=N]
-ench inbox next                          # Next document
-ench inbox promote <document-id> [--curated]
-ench inbox dismiss <document-id>         # Soft-delete
-```
-
 ### Sync, db, wayback
 
 ```bash
@@ -168,11 +159,10 @@ ench links create '{"sourceId":<new-id>,"targetId":<creator-id>,"predicate":"cre
 ench links list <record-id> --predicate=created_by --direction=outgoing
 ```
 
-### Browse the Readwise inbox
+### Find records needing curation
 
 ```bash
-ench inbox list --limit=20 --format=table
-ench inbox promote <doc-id> --curated
+ench records list --curated=false --limit=20 --format=table
 ```
 
 ### Preview a destructive change
