@@ -1,0 +1,29 @@
+#!/bin/bash
+# amber-voyager — run amber ON voyager so the archive lands in its library
+# (~/Archives there, served at https://archive.chsmc.tools/).
+#
+#   amber-voyager <url> [amber flags…]   e.g. --keep-js, --at 2009-06, --overwrite
+#   amber-voyager index                  rebuild the library index
+#   amber-voyager doctor                 check voyager's amber setup
+#
+# Every argument is passed through to amber's CLI on voyager; paths in the
+# output are rewritten to archive.chsmc.tools URLs. Personal glue — amber
+# itself knows nothing about voyager.
+set -euo pipefail
+
+if [ $# -eq 0 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+  sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'
+  exit 0
+fi
+
+# Shell-escape each argument so URLs with ?, &, * survive the remote shell.
+args=$(printf '%q ' "$@")
+
+remote='cd ~/Repositories/amber
+export PATH="$HOME/.nvm/versions/node/v24.13.0/bin:$HOME/Library/pnpm:/opt/homebrew/bin:$PATH"
+set -a; [ -f .env ] && . ./.env; set +a
+export AMBER_ARCHIVE_DIR="$HOME/Archives"
+exec pnpm --silent exec tsx src/cli.ts '"$args"
+
+ssh -o ConnectTimeout=10 voyager -- "$remote" 2>&1 \
+  | sed -u 's|/Users/voyager/Archives/|https://archive.chsmc.tools/|g'

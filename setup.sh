@@ -57,3 +57,16 @@ echo "Setup complete! Claude Code will now use:"
 echo "  • Configuration: $SCRIPT_DIR/CLAUDE.md"
 echo "  • Skills: $SCRIPT_DIR/skills"
 echo "  • Commands: $SCRIPT_DIR/commands"
+
+# Symlink global scripts into ~/.local/bin (on PATH via ~/.zshrc)
+mkdir -p "$HOME/.local/bin"
+for script in "$SCRIPT_DIR"/bin/*; do
+    [ -f "$script" ] || continue
+    name="$(basename "$script")"
+    if [ -L "$HOME/.local/bin/$name" ]; then
+        echo "✓ $name symlink already exists"
+    else
+        ln -sf "$script" "$HOME/.local/bin/$name"
+        echo "✓ Created $name symlink"
+    fi
+done
