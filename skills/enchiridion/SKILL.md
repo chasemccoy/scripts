@@ -8,6 +8,13 @@ allowed-tools: Bash
 
 Enchiridion is a custom SQLite-based knowledge repository for long-term storage of links, references, sources, and research materials. Interact with it through the `ench` CLI — a stdio interface installed globally on PATH.
 
+**IMPORTANT — two databases.** The `ench` CLI operates on the LOCAL DEV database (`~/Repositories/enchiridion/enchiridion.db`, overridable via `DATABASE_PATH`), which drifts stale. Chase's REAL knowledge base is production, on his Mac mini via Tailscale: web UI `https://enchiridion.chsmc.tools`, API `https://enchiridion-api.chsmc.tools`. When the task is about Chase's actual knowledge (searching, counting, syncing, linking real records), use the production API:
+- `curl -s -m 300 -X POST https://enchiridion-api.chsmc.tools/sync/readwise` — trigger Readwise sync; returns `{success, messages[], entriesCreated, error?}`
+- `POST /records` with `{"filters":{"type":"concept"},"limit":500,"offset":0}` — query records (`type` takes a value or `{"in":[...]}`)
+- `GET /record/slug/<slug>`, `GET /record/<id>/links` — fetch a record / its `{incomingLinks, outgoingLinks}`
+
+Use `ench` (below) when developing Enchiridion itself, or with `DATABASE_PATH` pointed at a copy. If the production API is unreachable (mini asleep, Tailscale down), say so rather than silently substituting dev data — dev numbers look plausible but are stale.
+
 ## Output format
 
 All commands print JSON on stdout by default with shape `{data, meta}` (or `{error: {code, message}}` on stderr with exit 1). Useful global flags:

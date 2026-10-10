@@ -2,7 +2,6 @@
 name: design-lab
 description: Explore a UI design by generating visual variants on a live scratch page, polishing them in Chrome, and converging on the user's in-browser pick. Use for "explore designs", "see a few options", "iterate on the look of X".
 argument-hint: <what to design>
-disable-model-invocation: true
 ---
 
 # Design Lab

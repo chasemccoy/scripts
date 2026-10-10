@@ -365,3 +365,97 @@ The script handles:
 - Retrieving all tabs typically takes 1-3 seconds depending on tab count
 - Scales linearly with number of tabs
 - No rate limiting or throttling needed
+
+---
+
+# Live cloud reader (arc-synced-tabs.js)
+
+`arc-tabs.js` (above) reads the local `StorableSidebar.json` mirror. `arc-synced-tabs.js`
+instead reads the **currently synced tabs directly from Arc's cloud sync service** —
+the same source the Arc iOS app reads — so it works from anywhere, any time, even when
+Arc is closed on this Mac.
+
+## How Arc sync works (reverse-engineered)
+
+- **Backend:** Firebase project `bcny-arc-server`, **Cloud Firestore**, database `(default)`.
+  (Arc's bundled `GoogleService-Info.plist` still lists a Realtime Database URL,
+  `bcny-arc-server-default-rtdb.firebaseio.com`, but that instance is **disabled** —
+  it's a dead legacy path. Current clients use Firestore. Change pushes ride FCM.)
+- **Auth:** Firebase Auth. The refresh token is stored in the login Keychain by the
+  Firebase SDK; `arc-synced-tabs.js` reads it locally at runtime and exchanges it for a
+  short-lived ID token at `securetoken.googleapis.com`. The token never leaves the machine.
+- **Data model:** one flat collection, `sync/sidebar/{uid}`, whose document IDs encode the type:
+  `item|<uuid>` (tabs/folders/containers), `space|<uuid>` (spaces), plus `orderedSpaces`/metadata.
+  (Collection enumeration via `listCollectionIds` is blocked by security rules, but listing the
+  collection and getting docs is allowed.)
+- **Encryption:** every doc is **end-to-end encrypted** (fields `data`, `encryptedKey`, `publickey`,
+  `device`, `schemaVersion` 7). Scheme (verified by decrypting real docs — NaCl/libsodium):
+  - Each item has its own **X25519 keypair**. `encryptedKey` = 24-byte nonce ‖ `secretbox`(item's
+    X25519 **secret key**) under your master key. `publickey` = the item keypair's public half.
+  - `data` = a NaCl **sealed box** (`crypto_box_seal`) of the item JSON to `publickey`
+    (48-byte overhead = 32-byte ephemeral pubkey + 16-byte MAC).
+  - Decrypt: `secret = nacl.secretbox.open(encryptedKey[24:], encryptedKey[:24], masterKey)`, then
+    `json = sodium.crypto_box_seal_open(data, publickey, secret)`. (`publickey === X25519_base(secret)`.)
+- **Master key:** the 32-byte value in `~/Library/Application Support/Arc/StorableFirebaseEncryptionKey.json`
+  (`encryptionKeysByID` / `hashedPassword`), derived from your Arc sync password. It only exists on
+  Macs you've unlocked with that password — so decryption (unlike fetching) needs that key present.
+- Once decrypted, a tab is `data.tab.{savedURL, savedTitle, timeLastActiveAt}`; spaces carry
+  `containerIDs: ["unpinned",<uuid>,"pinned",<uuid>]` → "open tabs" = unpinned tabs.
+
+## Setup
+
+Install the one dependency (TweetNaCl, for decryption) once:
+
+```bash
+( cd ~/Repositories/scripts/skills/arc-browser && npm install )
+```
+
+Diagnostics if the structure/crypto ever changes: `--explore` (dump live doc tree) and
+`--dump-item` (dump one encrypted doc's field shapes + local key info).
+- Records are plaintext JSON (not E2E-encrypted in the current data era).
+
+## CLI usage
+
+```bash
+node ~/Repositories/scripts/skills/arc-browser/arc-synced-tabs.js            # open (unpinned) tabs by space
+node ~/Repositories/scripts/skills/arc-browser/arc-synced-tabs.js --json     # machine-readable
+node ~/Repositories/scripts/skills/arc-browser/arc-synced-tabs.js --all      # include pinned + favorites
+node ~/Repositories/scripts/skills/arc-browser/arc-synced-tabs.js --pinned   # only pinned
+node ~/Repositories/scripts/skills/arc-browser/arc-synced-tabs.js --space "HQ"
+node ~/Repositories/scripts/skills/arc-browser/arc-synced-tabs.js --debug    # step diagnostics, no secrets
+```
+
+## Credentials
+
+Arc stores its Firebase refresh token in the macOS **data-protection keychain**, which is
+scoped to Arc's own app entitlement — the `security` CLI (and any other script) cannot read
+it. So we mint our **own** durable refresh token with a one-time sign-in:
+
+```bash
+node ~/Repositories/scripts/skills/arc-browser/arc-synced-tabs.js --login
+```
+
+This checks that the account uses email/password auth, prompts for the password (hidden
+input, POSTed only to `identitytoolkit.googleapis.com` — never stored or logged), and saves
+the returned refresh token to the login keychain under service `arc-synced-tabs`. After that,
+every run self-refreshes and needs no password. Use `--email "<addr>"` if the Arc account
+isn't `hi@chasem.co`.
+
+Credential resolution order at read time:
+
+1. env `ARC_FIREBASE_REFRESH_TOKEN`
+2. login keychain service `arc-synced-tabs` (created by `--login`)
+3. `--keychain-service "<service>"` / auto-discovered `firebase_auth*` item (only if Arc ever
+   stored one in the file-based keychain — normally it doesn't)
+
+**If the account uses Google/Apple sign-in** (not email/password), `--login` bails. The
+fallback is to capture a refresh token from Arc's live traffic (e.g. mitmproxy on the
+`securetoken.googleapis.com` refresh call, with its CA trusted so Arc/Chromium accepts it)
+and pass it via `ARC_FIREBASE_REFRESH_TOKEN`.
+
+## Notes
+
+- Reflects the **synced** set, which can differ slightly from `arc-tabs.js`: the local
+  mirror also contains tabs from CloudKit/local-only state that were never pushed to the
+  cloud, so `arc-tabs.js` may report a few more tabs than are actually synced.
+- If token refresh fails, open Arc and confirm you're signed in / sync is enabled, then retry.

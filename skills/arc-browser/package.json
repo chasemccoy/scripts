@@ -1,0 +1,11 @@
+{
+  "name": "arc-browser-skill",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Arc tab access — local sidebar parsing (arc-tabs.js) and live encrypted cloud reader (arc-synced-tabs.js)",
+  "dependencies": {
+    "libsodium-wrappers": "^0.8.4",
+    "libsodium-wrappers-sumo": "^0.8.4",
+    "tweetnacl": "^1.0.3"
+  }
+}

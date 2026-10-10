@@ -1,7 +1,7 @@
 ---
 name: obsidian-vault
 description: Manage Obsidian vault Markdown notes with frontmatter and wikilinks. Use when user asks to create, edit, delete, or organize Obsidian notes (excluding log entries, which are handled by the log skill).
-version: 2.0.0
+version: 2.1.0
 allowed-tools: Read, Edit, Write, Grep, Glob, Bash
 ---
 
@@ -17,12 +17,18 @@ allowed-tools: Read, Edit, Write, Grep, Glob, Bash
 
 **Folder structure:**
 - **@Inbox**: Quick captures and unsorted notes. Unless specified, new notes should be placed in this folder.
-- **Journal**: Daily notes and time-based entries
-- **Projects**: Active projects (archive completed to `Projects/Archive/`)
-- **Slipbox**: Permanent notes and knowledge base
+- **Agents**: Agent session logs and memories — managed by the agent-sessions skill, not this skill
+- **Clippings**: Full articles saved with the Obsidian web clipper (frontmatter: title, source, author, created, tags)
+- **Journal**: ARCHIVED — per-day notes from 2019–2024, superseded by Log.md. Never add new notes here.
+- **Library**: Catalog of physical books and media, one note per item with rich frontmatter (title, authors, isbn, cover, pages, acquired). Follow the existing schema exactly when adding entries.
+- **Projects**: Active projects (must have `description` frontmatter; archive completed to `Projects/Archive/`)
 - **Readwise**: Auto-synced highlights - don't manually edit
-- **Writing**: Long-form writing and drafts
+- **Slipbox**: Permanent notes and knowledge base. Largely historical — includes many empty stub notes created as wikilink targets. Also holds past-year log archives (`2023 log.md`, `2024 log.md`, `2025 log.md`).
+- **Templates**: Obsidian templates (`New note template` is applied via `obsidian create`)
+- **Writing**: DORMANT — long-form drafts through 2024. Blog drafting now happens in `~/Repositories/www/posts` via the blogging skill; don't start new drafts here.
 - **assets**: All images and attachments
+
+The vault root also holds `Log.md` (log skill only), several `.base` map/table views, and `.canvas` maps — leave these to their owning workflows.
 
 ## Obsidian CLI
 
