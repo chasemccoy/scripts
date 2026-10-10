@@ -198,11 +198,20 @@ async function voyager() {
 	const down = apps.filter((a) => a.pm2_env?.status !== "online").map((a) => `${a.name} (${a.pm2_env?.status})`);
 	const restarted = apps.filter((a) => a.pm2_env?.status === "online" && now - a.pm2_env.pm_uptime < DAY && a.name !== "familiar")
 		.map((a) => a.name);
-	const df = (await run("df", ["-h", HOME], { env: { PATH } })).stdout.trim().split("\n").at(-1).split(/\s+/);
 	return [
 		`- pm2: ${apps.length} apps, ${down.length ? `down: ${down.join(", ")}` : "all online"}${restarted.length ? `; restarted in the last day: ${restarted.join(", ")}` : ""}`,
-		`- disk: ${df[3]} free of ${df[1]} (${df[4]} used)`,
+		`- disk: ${await disk()}`,
 	];
+}
+
+/** Free space as System Settings counts it: what's free plus what macOS purges on demand (local Time Machine
+ *  snapshots, a staged update, caches). `df` sees only the first, and called a healthy disk 94% full. */
+async function disk() {
+	const gb = (n) => `${(n / 1e9).toFixed(1)} GB`;
+	const swift = `import Foundation; let v = try! URL(fileURLWithPath: NSHomeDirectory()).resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey, .volumeAvailableCapacityKey, .volumeTotalCapacityKey]); print(v.volumeAvailableCapacityForImportantUsage!, v.volumeAvailableCapacity!, v.volumeTotalCapacity!)`;
+	const [available, free, total] = (await run("swift", ["-e", swift], { env: { PATH, HOME } })).stdout.trim().split(/\s+/).map(Number);
+	const low = available < 20e9 ? " (LOW: under 20 GB available)" : "";
+	return `${gb(available)} available of ${gb(total)}${low}; ${gb(free)} free right now, the rest purgeable (snapshots, a staged update, caches)`;
 }
 
 // MARK: Helpers

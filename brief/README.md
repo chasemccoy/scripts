@@ -16,7 +16,7 @@ limit, and one that fails prints `(unavailable: why)` while the rest still print
 | Yesterday's log | `~/Notes/Log.md`, the section under yesterday's heading, and today's if begun |
 | Arc tabs | the arc-tabs service (`localhost:5003`): open tabs per space, how many are stale, the newest |
 | Enchiridion | `ench records list`, records added in the last day |
-| Voyager | `pm2 jlist` (anything down or restarted) and free disk |
+| Voyager | `pm2 jlist` (anything down or restarted) and disk space as System Settings counts it (free plus purgeable) |
 
 Familiar's own conversations, threads and routines come from its memory, not from the script.
 
