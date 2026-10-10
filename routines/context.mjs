@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-// The morning brief's sources, gathered on voyager into one compact Markdown digest for Familiar to write the brief
-// from (README.md). Each source is fetched on its own with a time limit; one that fails says why in a line and the
-// rest still print. Read-only: databases are copied before they are opened.
+// Context for Familiar's routines (README.md): Chase's day, gathered on voyager into one compact Markdown digest a
+// routine's instructions can ask Familiar to run. Each source is fetched on its own with a time limit; one that fails
+// says why in a line and the rest still print. Read-only: databases are copied before they are opened.
 //
-//   node ~/Repositories/scripts/brief/sources.mjs            # the digest, Markdown
-//   node ~/Repositories/scripts/brief/sources.mjs --json     # the same, as JSON
+//   node ~/Repositories/scripts/routines/context.mjs                     # every source, Markdown
+//   node ~/Repositories/scripts/routines/context.mjs weather calendar    # just these
+//   node ~/Repositories/scripts/routines/context.mjs --json              # as JSON
+//   node ~/Repositories/scripts/routines/context.mjs --list              # the source names
 import { execFile } from "node:child_process";
 import { copyFile, mkdtemp, readFile, rm } from "node:fs/promises";
 import { homedir, tmpdir } from "node:os";
@@ -17,19 +19,32 @@ const PATH = `/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:${process.env.PATH 
 const now = new Date();
 const DAY = 86_400_000;
 
-/** A source: a name and a function returning Markdown lines (or throwing). */
+/** A source: the name a routine asks for it by, its heading, and a function returning Markdown lines (or throwing). */
 const sources = [
-	["Weather", weather],
-	["Calendar", calendar],
-	["Things", things],
-	["Yesterday's log", log],
-	["Arc tabs", arcTabs],
-	["Enchiridion", enchiridion],
-	["Voyager", voyager],
+	["weather", "Weather", weather],
+	["calendar", "Calendar", calendar],
+	["things", "Things", things],
+	["log", "Yesterday's log", log],
+	["tabs", "Arc tabs", arcTabs],
+	["enchiridion", "Enchiridion", enchiridion],
+	["voyager", "Voyager", voyager],
 ];
 
+const args = process.argv.slice(2);
+if (args.includes("--list")) {
+	console.log(sources.map(([key, name]) => `${key.padEnd(12)} ${name}`).join("\n"));
+	process.exit(0);
+}
+const asked = args.filter((a) => !a.startsWith("--"));
+const unknown = asked.filter((a) => !sources.some(([key]) => key === a));
+if (unknown.length) {
+	console.error(`Unknown source${unknown.length > 1 ? "s" : ""}: ${unknown.join(", ")}. Sources: ${sources.map(([key]) => key).join(", ")}`);
+	process.exit(2);
+}
+const chosen = asked.length ? sources.filter(([key]) => asked.includes(key)) : sources;
+
 const results = await Promise.all(
-	sources.map(async ([name, fn]) => {
+	chosen.map(async ([, name, fn]) => {
 		const started = Date.now();
 		try {
 			const lines = await withTimeout(fn(), 25_000);
@@ -43,7 +58,7 @@ const results = await Promise.all(
 if (process.argv.includes("--json")) {
 	console.log(JSON.stringify({ at: now.toISOString(), sources: results }, null, 2));
 } else {
-	const out = [`# Brief sources, ${fmtDay(now)} ${fmtTime(now)}`];
+	const out = [`# Context, ${fmtDay(now)} ${fmtTime(now)}`];
 	for (const r of results) {
 		out.push("", `## ${r.name}`);
 		if (!r.ok) out.push(`(unavailable: ${r.error})`);
@@ -77,7 +92,7 @@ async function weather() {
 /** Events today and the next three days from the synced Calendar database (a copy), holidays once, by day. */
 async function calendar() {
 	const src = join(HOME, "Library/Group Containers/group.com.apple.calendar");
-	const dir = await mkdtemp(join(tmpdir(), "brief-cal-"));
+	const dir = await mkdtemp(join(tmpdir(), "routines-cal-"));
 	try {
 		for (const f of ["Calendar.sqlitedb", "Calendar.sqlitedb-wal", "Calendar.sqlitedb-shm"]) {
 			await copyFile(join(src, f), join(dir, f)).catch(() => {});
