@@ -191,7 +191,7 @@ async function enchiridion() {
 		: ["- nothing added in the last day"];
 }
 
-/** The server: pm2 apps that aren't online or restarted lately, and free disk. */
+/** The server: pm2 apps that aren't online or restarted lately. */
 async function voyager() {
 	const { stdout } = await run("pm2", ["jlist"], { env: { PATH, HOME } });
 	const apps = JSON.parse(stdout);
@@ -200,18 +200,7 @@ async function voyager() {
 		.map((a) => a.name);
 	return [
 		`- pm2: ${apps.length} apps, ${down.length ? `down: ${down.join(", ")}` : "all online"}${restarted.length ? `; restarted in the last day: ${restarted.join(", ")}` : ""}`,
-		`- disk: ${await disk()}`,
 	];
-}
-
-/** Free space as System Settings counts it: what's free plus what macOS purges on demand (local Time Machine
- *  snapshots, a staged update, caches). `df` sees only the first, and called a healthy disk 94% full. */
-async function disk() {
-	const gb = (n) => `${(n / 1e9).toFixed(1)} GB`;
-	const swift = `import Foundation; let v = try! URL(fileURLWithPath: NSHomeDirectory()).resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey, .volumeAvailableCapacityKey, .volumeTotalCapacityKey]); print(v.volumeAvailableCapacityForImportantUsage!, v.volumeAvailableCapacity!, v.volumeTotalCapacity!)`;
-	const [available, free, total] = (await run("swift", ["-e", swift], { env: { PATH, HOME } })).stdout.trim().split(/\s+/).map(Number);
-	const low = available < 20e9 ? " (LOW: under 20 GB available)" : "";
-	return `${gb(available)} available of ${gb(total)}${low}; ${gb(free)} free right now, the rest purgeable (snapshots, a staged update, caches)`;
 }
 
 // MARK: Helpers
