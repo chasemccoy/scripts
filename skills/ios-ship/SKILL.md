@@ -75,6 +75,8 @@ A build replaces the installed app and keeps its data only when **both** of thes
 
 An app installed from a free Personal Team build (Faulkner was signed by `756EWAN4G2`) has to be deleted once before the first ios-ship build will install. If its data lives only on the phone, save it first: Xcode → Devices and Simulators → the app → Download Container. To keep Xcode builds from the MacBook and ios-ship builds interchangeable, set the project's `DEVELOPMENT_TEAM` to `GXA23694DJ` too.
 
+If the export fails with *"The app identifier … cannot be registered to your development team because it is not available"*, a free Personal Team still holds that bundle ID, and free teams can't delete App IDs. Change the bundle ID (Faulkner moved to `org.chsmc.faulkner.ios`). It installs as a new app, so delete the old one.
+
 Ad-hoc builds use the **production** push environment. Xcode development builds use the sandbox.
 
 ## Devices
