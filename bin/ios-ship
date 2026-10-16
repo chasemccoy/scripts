@@ -1,0 +1,16 @@
+#!/bin/bash
+# ios-ship — build an iOS app on voyager and print an install link.
+# Runs the skill's CLI directly on voyager, or forwards over ssh from anywhere else.
+# See ~/Repositories/scripts/skills/ios-ship/SKILL.md. `ios-ship --help` lists commands.
+set -euo pipefail
+
+node_bin="$HOME/.nvm/versions/node/v24.13.0/bin/node"
+cli="$HOME/Repositories/scripts/skills/ios-ship/ios-ship.mjs"
+
+if [ "$(id -un)" = "voyager" ]; then
+  exec "$node_bin" "$cli" "$@"
+fi
+
+# Shell-escape each argument so notes with spaces and quotes survive the remote shell.
+args=$(printf '%q ' "$@")
+exec ssh -o ConnectTimeout=10 voyager -- "exec /Users/voyager/.nvm/versions/node/v24.13.0/bin/node /Users/voyager/Repositories/scripts/skills/ios-ship/ios-ship.mjs $args"
