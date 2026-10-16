@@ -372,11 +372,18 @@ async function build(args) {
         `OTHER_CODE_SIGN_FLAGS=--keychain=${KEYCHAIN}`,
         ...(project.buildSettings ? Object.entries(project.buildSettings).map(([k, v]) => `${k}=${v}`) : []),
       ];
-      let code = await runLogged('xcodebuild', [
+      const archive = () => runLogged('xcodebuild', [
         'archive', projectFlag, projectPath, '-scheme', schemeName, '-configuration', configuration,
         '-destination', 'generic/platform=iOS', '-archivePath', archivePath,
         '-derivedDataPath', join(DERIVED, source.repo), ...auth, ...settings,
       ], log, { cwd: source.dir });
+      let code = await archive();
+      // A profile regenerated mid-build (say, by Xcode on the MacBook signing the same app) leaves the
+      // archive pointing at a deleted file. A second try picks up the new one.
+      if (code !== 0 && /Provisioning Profiles\/[^']+\.mobileprovision'\. Did you forget/.test(readFileSync(logPath, 'utf8'))) {
+        log.write('\nios-ship: a provisioning profile changed during the build; retrying once\n');
+        code = await archive();
+      }
       if (code !== 0) return fail('xcodebuild archive failed');
 
       const options = join(WORK, `${source.repo}-${id}-ExportOptions.plist`);
