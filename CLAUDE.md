@@ -117,6 +117,7 @@ Two separate paths — deploying to voyager is not what makes the public sites l
 
 - **Agent Sessions Skill**: `~/Repositories/scripts/skills/agent-sessions` - Manage persistent session logs and memories for AI agents in `~/Notes/Agents/`. Use when you need to save work context across conversations, resume from previous sessions, or maintain long-term memory. 
 - **Apple Notes Skill**: `~/Repositories/scripts/skills/apple-notes`
+- **Artifacts Skill**: `~/Repositories/scripts/skills/artifacts` - Save, update, and find agent-made HTML artifacts (prototypes, tools, reports, explainers, visualizations) with the `artifacts` CLI. Each artifact is a folder in `~/Repositories/artifacts/library`, browsable at artifacts.chsmc.tools. Use when the user asks to save or find something an agent made, or when you finish a standalone HTML page made for Chase.
 - **Archive Webpage Skill**: `~/Repositories/scripts/skills/archive-webpage` - Archive a webpage as a self-contained, de-junked offline folder using the amber tool. Use when user asks to save, archive, snapshot, or make an offline copy of a webpage or URL. Archives live in `~/Documents/Archives`; `amber-voyager <url>` archives onto voyager instead (served at archive.chsmc.tools).
 - **Blogging Skill**: `~/Repositories/scripts/skills/blogging`
 - **Calendar Skill**: `~/Repositories/scripts/skills/calendar` - Access and manage macOS Calendar events. Use when user asks about calendar events, schedule, upcoming meetings, or wants to create new events.
