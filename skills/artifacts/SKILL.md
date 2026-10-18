@@ -56,6 +56,12 @@ artifacts edit <id> --add-tag css --star     # also --title, --description, --ki
 artifacts thumb <id>                         # retake a screenshot that came out blank or mid-animation
 ```
 
+Deleting is only for when Chase asks. It removes the folder and commits; git history keeps a copy:
+
+```bash
+artifacts delete <id> --yes                  # full id or the slug after the date; prefixes are refused
+```
+
 Ids look like `2026-07-04-ghibli-clouds-shader`; the part after the date (or any unambiguous prefix) works too.
 
 ## Finding
@@ -73,7 +79,7 @@ need the contents.
 
 ## Notes
 
-- Don't edit `library/` by hand or delete artifacts unless Chase asks; the gallery and other machines commit to
+- Don't edit `library/` by hand, and don't delete artifacts unless Chase asks; the gallery and other machines commit to
   the same repo, so go through the CLI (it pulls first).
 - `--no-commit` / `--no-push` stop short of git, for trying things out.
 - Details: `~/Repositories/artifacts/README.md`.
