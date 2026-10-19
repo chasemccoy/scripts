@@ -13,15 +13,15 @@
 
 ## Machines
 
-Two macOS machines. Both report the hostname `mac.lan`, so always disambiguate by user account (`chase` vs `voyager`), never by hostname.
+Two macOS machines, and this file is the same on both: each one's `~/.claude/CLAUDE.md` (and `~/.claude/skills`) is a symlink into its own checkout of the `scripts` repo, kept current by pulling. So it never says which machine you're on: **check before acting** with `whoami` (or `$HOME`): `chase` is the MacBook, `voyager` is the Mac mini. Both report the hostname `mac.lan`, so never go by hostname. Paths below written with `~` mean the home of whichever machine you're on; where something lives on only one of them, it says so.
 
-### This machine — MacBook Air (user `chase`, `~` = `/Users/chase`)
+### MacBook Air (user `chase`, `~` = `/Users/chase`)
 
 The daily driver and the only place development happens. All repos, writing, notes, and agent work live here. Nothing is authored directly on voyager.
 
 ### Voyager — Mac mini (user `voyager`, `~` = `/Users/voyager`)
 
-Always-on home server. Runs the personal apps, holds their production data, and hosts background services. Reach it with:
+Always-on home server. Runs the personal apps, holds their production data, and hosts background services. Some agents run here too (the Faulkner chat service, familiar). From the MacBook, reach it with:
 
 ```bash
 ssh voyager
@@ -30,7 +30,8 @@ ssh voyager
 - Configured in `~/.ssh/config` (`Host voyager` → `HostName voyager`, `User voyager`), resolved via Tailscale MagicDNS.
 - **The same command works at home and away** — Tailscale handles it either way, taking a direct LAN path at home (`192.168.86.38`) and relaying when remote. There is no separate "local" vs "remote" procedure; don't reach for `.local` addresses or LAN IPs.
 - Tailnet IP: `100.127.164.4`. Tailnet name: `voyager.tail9000e.ts.net`.
-- Voyager has its own `~/CLAUDE.md`, which is a **stale copy** of this file (missing the newer skills). Don't assume the two are in sync; edits here don't propagate.
+- Voyager's copy of this file and the skills is its checkout of the `scripts` repo, so it's only as current as its last `git pull` there; edits made on the MacBook reach it once they're pushed and pulled.
+- On voyager itself, skip `ssh voyager`: run the command directly. Don't assume a skill's app or data is there just because the skill is: check (Arc, for one, is only on the MacBook).
 
 ## Deploying to voyager
 
@@ -59,7 +60,7 @@ Never assume a fixed list of services — it changes. Three sources of truth:
 - **What's exposed, and on which port** — `~/Repositories/dotfiles/voyager/Caddyfile`. Each `*.chsmc.tools` hostname and the localhost port it proxies to.
 - **What's actually alive right now** — `pm2 list` on voyager, then `pm2 logs <name>` to see why something is down.
 
-The first two are versioned in the dotfiles repo and symlinked into `~/Documents` on voyager, so **read them locally — no SSH needed** (pull dotfiles first). See `voyager/README.md` there for how the pieces fit together. Only live state needs a connection:
+The first two are versioned in the dotfiles repo and symlinked into `~/Documents` on voyager, so **read them from your dotfiles checkout — no SSH needed** (pull dotfiles first). See `voyager/README.md` there for how the pieces fit together. Only live state needs a connection:
 
 ```bash
 ssh voyager 'PATH=/opt/homebrew/bin:$PATH pm2 list'
