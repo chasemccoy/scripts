@@ -18,7 +18,7 @@ voyager builds what's **on GitHub**, not the MacBook's working tree. So first co
 ios-ship build <repo> --ref <branch-or-sha> --note "what changed"
 ```
 
-- `<repo>` is the GitHub repo name under `chasemccoy` (`familiar`, `faulkner-ios`, `enchiridion`, `curio`, …). voyager keeps its own mirror in `~/ios-builds/repos/` and builds each commit in a throwaway worktree. It never touches the checkouts in `~/Repositories` there.
+- `<repo>` is the GitHub repo name under `chasemccoy` (`familiar`, `faulkner`, `enchiridion`, `curio`, …). voyager keeps its own mirror in `~/ios-builds/repos/` and builds each commit in a throwaway worktree. It never touches the checkouts in `~/Repositories` there.
 - `--ref` defaults to the repo's default branch. A branch name means its latest commit on GitHub.
 - `--note` is a short line shown in the history. Use it to say what this build is for.
 - Agents running **on voyager** (familiar, or Claude Code there) can build a local directory as it is, uncommitted changes included: `ios-ship build /path/to/repo`. The history marks such builds with `+` (dirty).
