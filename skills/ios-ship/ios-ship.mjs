@@ -335,8 +335,12 @@ async function build(args) {
       const i = h.findIndex((b) => b.id === record.id && b.repo === record.repo);
       if (i >= 0) h[i] = record; else h.unshift(record);
       saveHistory(h);
-      writeFileSync(join(outDir, 'index.html'), renderBuild(record));
       writeFileSync(join(WWW, 'index.html'), renderIndex(h));
+      // Every page of this app, so older ones point at the new latest.
+      for (const b of h) {
+        const dir = join(WWW, b.repo, b.id);
+        if (existsSync(dir)) writeFileSync(join(dir, 'index.html'), renderBuild(b, h));
+      }
       log.end();
       source.cleanup();
       return record;
@@ -479,7 +483,7 @@ function index() {
   writeFileSync(join(WWW, 'index.html'), renderIndex(history));
   for (const b of history) {
     const dir = join(WWW, b.repo, b.id);
-    if (existsSync(dir)) writeFileSync(join(dir, 'index.html'), renderBuild(b));
+    if (existsSync(dir)) writeFileSync(join(dir, 'index.html'), renderBuild(b, history));
   }
   console.log(`rebuilt ${history.length} build page(s)`);
 }
